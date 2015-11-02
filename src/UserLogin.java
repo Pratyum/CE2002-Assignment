@@ -292,7 +292,7 @@ public class UserLogin {
 					}
 					for(int i=0;i<ListOfMovies.size();++i){
 						Movie temp = (Movie) ListOfMovies.get(i);
-						if(temp.getStatus()!="Coming Soon"){
+						if(temp.getStatus().substring(8).compareTo("Coming Soon")!=0){
 							System.out.println("("+temp.getMovieId()+")"+temp.getMovietitle());
 						}
 					}
@@ -370,7 +370,8 @@ public class UserLogin {
 					}
 					System.out.println("Enter the No of Tickets: ");
 					int noOfTickets = Integer.parseInt(input.nextLine());
-					if(ListOfScreen.get(screenI).getSeatsFree() <noOfTickets){
+					if(ListOfScreen.get(screenI).getSeatsFree
+							() <noOfTickets){
 						System.out.println("There is only"+ListOfScreen.get(screenI).getSeatsFree()+" seats free! Please try again!" );
 					}else{
 					ArrayList<Ticket> ListOfTickets = new ArrayList<>();
@@ -470,7 +471,7 @@ public class UserLogin {
 			}
 			for(int i=0;i<ListOfMovies.size();++i){
 				Movie temp = (Movie) ListOfMovies.get(i);
-				if(!temp.getStatus().equals("Coming Soon")){
+				if(temp.getStatus().substring(8).compareTo("Coming Soon")!=0){
 					System.out.println(temp.getMovietitle());
 					System.out.println(temp.getType());
 					System.out.println(temp.getDuration()+" minutes");
