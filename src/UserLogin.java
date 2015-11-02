@@ -22,7 +22,8 @@ public class UserLogin {
 	    System.out.println("====Menu====");
 	    System.out.println("1.Staff");
 	    System.out.println("2.Customer");
-	    System.out.println("3.Exit");
+	    System.out.println("3.View All Movies with Information");
+	    System.out.println("4.Exit");
 	    
 //	    login function
 	    do{
@@ -458,6 +459,32 @@ public class UserLogin {
 			}
 			break;
 		case 3:
+			System.out.println("Movies on Show!");
+			ArrayList ListOfMovies = null;
+			MovieStorage ms = new MovieStorage();
+			try {
+				ListOfMovies = ms.readObject();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("File Not Found!" + e.getMessage());
+			}
+			for(int i=0;i<ListOfMovies.size();++i){
+				Movie temp = (Movie) ListOfMovies.get(i);
+				if(!temp.getStatus().equals("Coming Soon")){
+					System.out.println(temp.getMovietitle());
+					System.out.println(temp.getType());
+					System.out.println(temp.getDuration()+" minutes");
+					System.out.println("Average Rating: "+ temp.getAvgRating());
+					System.out.println("Ticket Sales : "+ temp.getTicketSales());
+					System.out.println(temp.getDirector());
+					System.out.println(temp.getCast());
+					System.out.println("Synopsis");
+					System.out.println(temp.getSynopsis().substring(10));
+					System.out.println("-----------------------------------------------------------------");
+				}
+			}
+			break;
+		case 4:
 			System.out.println("Program terminating...");
 			System.exit(0);
 		default:
