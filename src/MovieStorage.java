@@ -7,13 +7,13 @@ public class MovieStorage extends StorageHandler{
 	public static final String SEPARATOR = " ";
 	public static final String SEPARATOR1 = "|";
 	
-	public ArrayList readObject() throws IOException {
+	public ArrayList<Movie> readObject() throws IOException {
 		// read String from text file
-		ArrayList stringArray = (ArrayList)read("movie.txt");
-		ArrayList alr = new ArrayList();// to store Professors data
+		ArrayList<String> stringArray = (ArrayList<String>)read("movie.txt");
+		ArrayList<Movie> alr = new ArrayList<>();// to store Professors data
 
         for (int i = 0 ; i < stringArray.size() ; i++) {
-				String st = (String)stringArray.get(i);
+				String st = stringArray.get(i);
 				// get individual 'fields' of the string separated by SEPARATOR
 				StringTokenizer star = new StringTokenizer(st , SEPARATOR1);	// pass in the string to the string tokenizer using delimiter ","
                 while(star.hasMoreTokens()){

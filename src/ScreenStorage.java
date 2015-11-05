@@ -7,11 +7,11 @@ import java.util.StringTokenizer;
 public class ScreenStorage extends StorageHandler{
 	public static final String SEPARATOR = "|";
 	@Override
-	public ArrayList readObject() throws IOException, ParseException {
-		ArrayList stringArray = (ArrayList)read("screen.txt");
-		ArrayList alr =new ArrayList<>();
+	public ArrayList<Screen> readObject() throws IOException, ParseException {
+		ArrayList<String> stringArray = (ArrayList)read("screen.txt");
+		ArrayList<Screen> alr =new ArrayList<>();
 		for(int i=0;i<stringArray.size();++i){
-			String st = (String)stringArray.get(i);
+			String st = stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
 			int screenNo = Integer.parseInt(star.nextToken().trim());
 			Screen s = new Screen(screenNo);
