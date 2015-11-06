@@ -344,19 +344,19 @@ public class UserLogin {
 		for(int i=0;i<noOfTickets;++i){
 		screen.printScreen();
 		System.out.println("Enter the Row character:");
-		char rowNo = input.nextLine().charAt(0);
+		char rowNo= input.next().charAt(0);
 		System.out.println("Enter the Seat Number:");
-		int seatno = Integer.parseInt(input.nextLine());
+		int seatno = input.nextInt();
 		boolean isStudent = false, isElder = false;
 		if(screen.AssignSeat(rowNo, seatno)){
 			System.out.println("Are You a Student(Y/N)");
-			String details =input.nextLine();
-			if(details.charAt(0)=='Y'){
+			char details =input.next().charAt(0);
+			if(details=='Y'){
 				isStudent = true;
 			}else{
 				System.out.println("Are you above 65? (Y/N)");
-				details = input.nextLine();
-				if(details.charAt(0)=='Y'){
+				details = input.next().charAt(0);
+				if(details=='Y'){
 					isElder = true;
 				}
 			}
@@ -409,8 +409,26 @@ public class UserLogin {
 		return booking;
 	}
 	
-	private void printBooking(Booking booking){
+	private void printBooking(Booking booking,ArrayList<Ticket> tickets){
 		//TODO Create pretty print of Booking
+		System.out.println("-----------------Booking Details-----------------");
+		System.out.println("Transaction ID: "+booking.getCurrentTime());
+		System.out.println("Name: "+booking.getName());
+		System.out.println("Phone: "+booking.getNumber());
+		System.out.println("Email: "+booking.getEmail());
+		System.out.println("-----------------Ticket Details-----------------");
+		System.out.println("No of Tickets: "+ tickets.size());
+		System.out.println("Movie: "+ tickets.get(0).getMovie());
+		System.out.println("Show Date: "+ tickets.get(0).getShowDate());
+		System.out.println("Show Time: "+ tickets.get(0).getShowTime());		
+		System.out.println("Screen No: "+ tickets.get(0).getscreenNo());
+		System.out.print("Seats :");
+			for(int i=0;i<tickets.size();++i){
+				System.out.print(tickets.get(i).getTicketNo()+" ");
+			}
+		System.out.println("------------------------------------------------");
+		
+		
 	}
 	
 	private void displayDetailMovie(){
@@ -537,7 +555,8 @@ public class UserLogin {
 							 }		
 					  }	while(choice1!=0);
 					  
-				case 3:			
+				case 3:	
+					//TODO Configure
 					break;
 				case 4:
 					break;			
@@ -562,7 +581,7 @@ public class UserLogin {
 			  if(custOption==1){
 				System.out.println("(1) Choose by Movie");
 				System.out.println("(2) Choose by CinePlex");
-				subOption = Integer.parseInt(input.nextLine());
+				subOption = input.nextInt();
 				if(subOption==1){
 					//Display Showing movies
 					Movie movie=chooseMovie();
@@ -576,12 +595,12 @@ public class UserLogin {
 					int screenNo = showTime.getCinemaId();
 					Screen screen = chooseScreen(screenNo);
 					System.out.println("Enter the No of Tickets: ");
-					int noOfTickets = Integer.parseInt(input.nextLine());
+					int noOfTickets =input.nextInt();
 					ArrayList<Ticket> tickets= chooseTickets(screen,noOfTickets,movie,showTime);
 					
 					// Book Tickets and Get Details for ticket and print inventory.
 					Booking booking  = chooseBooking(tickets);
-					printBooking(booking);
+					printBooking(booking,tickets);
 					System.out.println("Done! ");
 					}
 				else if(subOption==2){
@@ -600,7 +619,7 @@ public class UserLogin {
 					ArrayList<Ticket> tickets= chooseTickets(screen,noOfTickets,movie,showTime);
 					// Book Tickets and Get Details for ticket and print inventory.
 					Booking booking  = chooseBooking(tickets);
-					printBooking(booking);
+					printBooking(booking,tickets);
 					System.out.println("Done! ");
 					}
 				}
@@ -608,10 +627,10 @@ public class UserLogin {
 				//Display All Movies
 				Movie movie = chooseMovie();
 				System.out.println("Enter Rating for Movie(1-5)");
-				int Rating = Integer.parseInt(input.nextLine());
+				int Rating = input.nextInt();
 				if(Rating<=5&& Rating>=1){
 					System.out.println("Enter Review(Only 1 Para): ");
-					String review = input.nextLine();
+					String review = input.next();
 					movie.addReview(review, Rating);
 				}
 			}
@@ -627,5 +646,15 @@ public class UserLogin {
 			break;
 		}
 		}while(choice<1 || choice >3);
-	 }//End of Main
+	 }//End of Login
+	
+	public static void main(String agrs[]){
+		UserLogin userLogin = new UserLogin();
+		try {
+			userLogin.Login();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

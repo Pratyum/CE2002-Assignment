@@ -26,7 +26,7 @@ public class Ticket {
 //		int hour=Integer.parseInt(showTime.substring(0, 1));
 //		int min=Integer.parseInt(showTime.substring(3, 4));
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-		String dateInString = showTime+" "+showDate+":00";
+		String dateInString = showDate+" "+showTime+":00";
 		Date date = null;
 		try {
 			date = sdf.parse(dateInString);
