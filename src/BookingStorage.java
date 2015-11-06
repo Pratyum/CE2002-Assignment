@@ -52,7 +52,7 @@ public static final String SEPARATOR = "|";
 				String ShowDate = star.nextToken().trim();
 				String showTime = star.nextToken().trim();
 				int noOfTicket = Integer.parseInt(star.nextToken().trim());
-				for(int i=0;i<noOfTicket;++i){
+				for(int j=0;j<noOfTicket;++j){
 				String ticketNo = star.nextToken().trim();
 				Ticket s = new Ticket(Type, Class, ticketNo, ShowDate, showTime,Venue,movieTitle, price);
 				alr.add(s);
