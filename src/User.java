@@ -261,12 +261,7 @@ public void showShowTime() throws IOException, ParseException{
 	for(int i=0;i<al.size();i++){
 	ShowTime st=(ShowTime)al.get(i);
 	System.out.println("Showtime ID :" +(i+1));
-	System.out.println("Cineplex:" +st.getCineplexName());		
-	System.out.println("Hall Number: "+st.getCinemaId());		
-	System.out.println(st.getMovieTitle());
-	//format the date and time to dd-MM-yyyy and HH:mm format
-	System.out.println("Date: " + dayFormat.format(st.getDate()));
-	System.out.println("Time: " + timeFormat.format(st.getTime()));
+	st.display();
 	System.out.println("---------------------------------------");		
 	}	
 	}
@@ -322,11 +317,7 @@ public void EditShowTime(int showTimeId) throws ParseException{
 		
 		//get the ShowTime user wants to edit
 		ShowTime st=(ShowTime)al.get(showTimeId-1);
-		System.out.println("1) Cineplex : " + st.getCineplexName());
-		System.out.println("2) Hall Number : " + st.getCinemaId());
-		System.out.println("3) " + st.getMovieTitle());
-		System.out.println("4) Date : " + dayFormat.format(st.getDate()));
-		System.out.println("5) Time : " + timeFormat.format(st.getTime()));
+		st.display();
 		System.out.println("Enter the field you wish to edit :");
 		int choice=input.nextInt();
 		input.nextLine();

@@ -411,17 +411,10 @@ public class UserLogin {
 	
 	private void printBooking(Booking booking,ArrayList<Ticket> tickets){
 		//TODO Create pretty print of Booking
-		System.out.println("-----------------Booking Details-----------------");
-		System.out.println("Transaction ID: "+booking.getCurrentTime());
-		System.out.println("Name: "+booking.getName());
-		System.out.println("Phone: "+booking.getNumber());
-		System.out.println("Email: "+booking.getEmail());
+		booking.display();
 		System.out.println("-----------------Ticket Details-----------------");
 		System.out.println("No of Tickets: "+ tickets.size());
-		System.out.println("Movie: "+ tickets.get(0).getMovie());
-		System.out.println("Show Date: "+ tickets.get(0).getShowDate());
-		System.out.println("Show Time: "+ tickets.get(0).getShowTime());		
-		System.out.println("Screen No: "+ tickets.get(0).getscreenNo());
+		tickets.get(0).display();
 		System.out.print("Seats :");
 			for(int i=0;i<tickets.size();++i){
 				System.out.print(tickets.get(i).getTicketNo()+" ");
@@ -436,16 +429,7 @@ public class UserLogin {
 		for(int i=0;i<ListOfMovies.size();++i){
 			Movie temp = (Movie) ListOfMovies.get(i);
 			if(temp.getStatus().substring(8).compareTo("Coming Soon")!=0){
-				System.out.println(temp.getMovietitle());
-				System.out.println(temp.getType());
-				System.out.println(temp.getDuration()+" minutes");
-				System.out.println("Average Rating: "+ temp.getAvgRating());
-				System.out.println("Ticket Sales : "+ temp.getTicketSales());
-				System.out.println(temp.getDirector());
-				System.out.println(temp.getCast());
-				System.out.println("Synopsis");
-				System.out.println(temp.getSynopsis().substring(10));
-				System.out.println("-----------------------------------------------------------------");
+				temp.display();
 			}
 		}
 	}
@@ -648,13 +632,5 @@ public class UserLogin {
 		}while(choice<1 || choice >3);
 	 }//End of Login
 	
-	public static void main(String agrs[]){
-		UserLogin userLogin = new UserLogin();
-		try {
-			userLogin.Login();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 }

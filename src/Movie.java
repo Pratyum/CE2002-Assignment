@@ -1,7 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Movie implements Serializable {
+public class Movie implements Serializable,DisplayInterface {
 	public static final int MAX_REVIEW = 10; //define max number of reviews
 	private int movieId;
 	private String movieTitle ;
@@ -101,4 +101,16 @@ public class Movie implements Serializable {
 		}
 		return false;
 	}
+	public void display(){
+				System.out.println(getMovietitle());
+				System.out.println(getType());
+				System.out.println(getDuration()+" minutes");
+				System.out.println("Average Rating: "+getAvgRating());
+				System.out.println("Ticket Sales : "+ getTicketSales());
+				System.out.println(getDirector());
+				System.out.println(getCast());
+				System.out.println("Synopsis");
+				System.out.println(getSynopsis().substring(10));
+				System.out.println("-----------------------------------------------------------------");
+			}
 }
