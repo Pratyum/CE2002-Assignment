@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class Ticket implements DisplayInterface {
+public class Ticket {
 	//-----------------------------------------Data Members
 	private String typeOfMovie;
 	private String classOfMovie;
@@ -105,15 +105,6 @@ public class Ticket implements DisplayInterface {
 	public void setMovie(String Movie){movie = Movie; }
 	
 	//-----------------------------------------Other Methods
-	public void display(){
-		
-		System.out.println("Movie: "+getMovie());
-		System.out.println("Show Date: "+ getShowDate());
-		System.out.println("Show Time: "+ getShowTime());		
-		System.out.println("Screen No: "+ getscreenNo());
-		System.out.print("Seats :");
-
-	}
 	
 
 }

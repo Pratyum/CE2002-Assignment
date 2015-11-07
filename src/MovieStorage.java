@@ -29,45 +29,11 @@ public class MovieStorage extends StorageHandler{
 				Movie m = new Movie(movieId,movietitle,type,rating,status,synopsis,director,cast,duration);
 				alr.add(m) ;
                 }
-			}
-        ArrayList<Review> ReviewList = this.readReview();
-        for(int i=0;i<alr.size();++i){
-        	ArrayList<Review> reviews = new ArrayList<>();
-        	for(int j=0;j<ReviewList.size();++j){
-        		if(alr.get(i).getMovieId()==ReviewList.get(j).getMovieID()){
-        			reviews.add(ReviewList.get(j));
-        		}
-        	}
-        	alr.get(i).setReview(reviews);
-        }
+			}		
 			return alr ;
 	
 	}
 	
-	public ArrayList<Review> readReview(){
-		ArrayList<Review> ReviewList = new ArrayList<>();
-		ArrayList<String> stringArray = new ArrayList<>();
-		try {
-			stringArray = (ArrayList<String>)read("review.txt");
-		} catch (IOException e) {
-			// Auto-generated catch block
-			e.printStackTrace();
-		}
-		 for (int i = 0 ; i < stringArray.size() ; i++) {
-				String st = stringArray.get(i);
-				// get individual 'fields' of the string separated by SEPARATOR
-				StringTokenizer star = new StringTokenizer(st , SEPARATOR1);	// pass in the string to the string tokenizer using delimiter ","
-             while(star.hasMoreTokens()){
-				int  MovieID = Integer.parseInt(star.nextToken().trim());	
-				int  ReviewRating = Integer.parseInt(star.nextToken().trim());	
-				String  ReviewText = star.nextToken().trim();	
-				Review r = new Review(ReviewText, ReviewRating, MovieID);
-				ReviewList.add(r) ;
-             }
-			}		
-			return ReviewList ;
-		
-	}
 	
 	 public static void saveupdatedMovie(String filename, List al) throws IOException {
 	  		List alw = new ArrayList() ;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+
 public class User {
 private String username;
 private String password;
@@ -261,7 +262,12 @@ public void showShowTime() throws IOException, ParseException{
 	for(int i=0;i<al.size();i++){
 	ShowTime st=(ShowTime)al.get(i);
 	System.out.println("Showtime ID :" +(i+1));
-	st.display();
+	System.out.println("Cineplex:" +st.getCineplexName());		
+	System.out.println("Hall Number: "+st.getCinemaId());		
+	System.out.println(st.getMovieTitle());
+	//format the date and time to dd-MM-yyyy and HH:mm format
+	System.out.println("Date: " + dayFormat.format(st.getDate()));
+	System.out.println("Time: " + timeFormat.format(st.getTime()));
 	System.out.println("---------------------------------------");		
 	}	
 	}
@@ -317,7 +323,11 @@ public void EditShowTime(int showTimeId) throws ParseException{
 		
 		//get the ShowTime user wants to edit
 		ShowTime st=(ShowTime)al.get(showTimeId-1);
-		st.display();
+		System.out.println("1) Cineplex : " + st.getCineplexName());
+		System.out.println("2) Hall Number : " + st.getCinemaId());
+		System.out.println("3) " + st.getMovieTitle());
+		System.out.println("4) Date : " + dayFormat.format(st.getDate()));
+		System.out.println("5) Time : " + timeFormat.format(st.getTime()));
 		System.out.println("Enter the field you wish to edit :");
 		int choice=input.nextInt();
 		input.nextLine();
@@ -425,5 +435,196 @@ public void DeleteShowTime(int showTimeId) throws ParseException{
 			e.printStackTrace();
 		}
 
+}
+
+public void ShowNormalPrice(){
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = SystemStorage.readPrice("NormalPrice.txt") ;
+		
+		for (int i = 0 ; i < al.size() ; i++) {
+				Price p = (Price)al.get(i);
+				System.out.println(p.getPriceType()+": "+p.getPrice());
+				
+		}
+		
+		
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void Show3DPrice(){
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = SystemStorage.readPrice("3DPrice.txt") ;
+		
+		for (int i = 0 ; i < al.size() ; i++) {
+				Price p = (Price)al.get(i);
+				System.out.println(p.getPriceType()+": "+p.getPrice());
+				
+		}
+		
+		
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void ShowPriceAttribute(int tickettype){
+	try {
+		ArrayList al=new ArrayList();
+		ArrayList al2=new ArrayList();
+		// read file containing Professor records.
+		al = SystemStorage.readPrice("NormalPrice.txt") ;
+		al2 =SystemStorage.readPrice("3DPrice.txt") ;
+		if(tickettype==1){
+			for (int i = 0 ; i < al.size() ; i++) {
+				Price p = (Price)al.get(i);
+				System.out.println(i+1+") "+p.getPriceType());
+				
+		}
+		}
+		if(tickettype==2){
+			for (int i = 0 ; i < al.size() ; i++) {
+				Price p = (Price)al2.get(i);
+				System.out.println(i+1+") "+p.getPriceType());		
+		}
+		}
+		
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void UpdateNormalPrice(int attribute){
+	Scanner input = new Scanner(System.in);
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = SystemStorage.readPrice("NormalPrice.txt");
+		String ty=null, pr=null;
+        double price=0;
+		for (int i = 0 ; i < al.size() ; i++) {
+				Price p = (Price)al.get(attribute-1);
+				ty=p.getPriceType();
+				pr=String.valueOf(p.getPrice());
+				
+				System.out.println("Enter New Price: ");
+				String newprice=input.nextLine();
+				pr=pr.replace(pr, newprice);
+				
+			    price=Double.parseDouble(pr);
+				
+				break;
+			
+		}
+		al.remove(attribute-1);
+		Price newPrice=new Price(ty,price);
+		al.add(attribute-1, newPrice);
+		
+		// write Professor record/s to file.
+		SystemStorage.saveupdatedPrice("NormalPrice.txt", al);
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void Update3DPrice(int attribute){
+	Scanner input = new Scanner(System.in);
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = SystemStorage.readPrice("3DPrice.txt");
+		String ty=null, pr=null;
+        double price=0;
+		for (int i = 0 ; i < al.size() ; i++) {
+				Price p = (Price)al.get(attribute-1);
+				ty=p.getPriceType();
+				pr=String.valueOf(p.getPrice());
+				
+				System.out.println("Enter New Price: ");
+				String newprice=input.nextLine();
+				pr=pr.replace(pr, newprice);
+				
+			    price=Double.parseDouble(pr);
+				
+				break;
+			
+		}
+		al.remove(attribute-1);
+		Price newPrice=new Price(ty,price);
+		al.add(attribute-1, newPrice);
+		
+		// write Professor record/s to file.
+		SystemStorage.saveupdatedPrice("3DPrice.txt", al);
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void CreateHoliday(String HolidayName,String HolidayDate ){
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = SystemStorage.readHoliday("Holiday.txt") ;
+		int HolidayId=(al.size())+1;
+		for (int i = 0 ; i < al.size() ; i++) {
+				Date d1 = (Date)al.get(i);
+				
+		}
+		
+		Holiday h= new Holiday(HolidayId,HolidayName,HolidayDate);
+		// al is an array list containing Professor objs
+		al.add(h);
+		
+		// write Professor record/s to file.
+		SystemStorage.saveupdatedHoliday("Holiday.txt", al);
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void ShowHoliday(){
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = SystemStorage.readHoliday("Holiday.txt") ;
+		for (int i = 0 ; i < al.size() ; i++) {
+				Holiday h = (Holiday)al.get(i);
+				System.out.println(h.getHolidayId()+"       "+ h.getHolidayName()+"       "+h.getHolidayDate());				    	
+			
+		}
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void RemoveHoliday(int holidayid){
+	Scanner input = new Scanner(System.in);
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = SystemStorage.readHoliday("Holiday.txt") ;
+		int id=0;
+		String hn=null,hd=null;
+
+		for (int i = 0 ; i < al.size() ; i++) {
+				Holiday h = (Holiday)al.get(holidayid-1);
+				id=h.getHolidayId();
+				hn=h.getHolidayName();
+				hd=h.getHolidayDate();
+				break;
+			
+		}
+		al.remove(holidayid-1);
+		
+		// write Professor record/s to file.
+		SystemStorage.saveupdatedHoliday("Holiday.txt", al);
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
 }
 }

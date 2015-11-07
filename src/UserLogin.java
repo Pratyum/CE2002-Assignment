@@ -9,7 +9,9 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
+
 public class UserLogin {
+	public UserLogin(){};
 	public User check=null;
 	private String username;
 	private String password;
@@ -323,117 +325,6 @@ public class UserLogin {
 		return ListOfMovieTimes.get(showTimeChoice-1);
 	}
 	
-	private Screen chooseScreen(int screenNo){
-		if(ListOfScreen.size()!=0){
-			for(int i=0;i<ListOfScreen.size();++i){
-				if(ListOfScreen.get(i).getScreenNo()== screenNo)
-					return ListOfScreen.get(i);
-			}
-		}else{
-				ListOfScreen.add(new Screen(screenNo));
-				return ListOfScreen.get(ListOfScreen.size()-1);
-		}
-		return null;
-	}
-	
-	private ArrayList<Ticket> chooseTickets(Screen screen , int noOfTickets,Movie movie,ShowTime showTime){
-		if(screen.getSeatsFree() <noOfTickets){
-			System.out.println("There is only"+screen.getSeatsFree()+" seats free! Please try again!" );
-		}else{
-		ArrayList<Ticket> ListOfTickets = new ArrayList<>();
-		for(int i=0;i<noOfTickets;++i){
-		screen.printScreen();
-		System.out.println("Enter the Row character:");
-		char rowNo= input.next().charAt(0);
-		System.out.println("Enter the Seat Number:");
-		int seatno = input.nextInt();
-		boolean isStudent = false, isElder = false;
-		if(screen.AssignSeat(rowNo, seatno)){
-			System.out.println("Are You a Student(Y/N)");
-			char details =input.next().charAt(0);
-			if(details=='Y'){
-				isStudent = true;
-			}else{
-				System.out.println("Are you above 65? (Y/N)");
-				details = input.next().charAt(0);
-				if(details=='Y'){
-					isElder = true;
-				}
-			}
-			Ticket ticket = new Ticket(movie.getType(), "Platinum", String.valueOf(rowNo).concat(String.valueOf(seatno)), showTime.getStrDate(), showTime.getStrTime(), showTime.getCineplexName(), showTime.getMovieTitle(), isStudent, isElder);
-			System.out.println("Seat Assigned!");
-			ListOfTickets.add(ticket);
-		}else{
-			System.out.println("Please Try Again!");
-			i--;
-		}
-		}
-		if(updateScreen(screen)){
-			return ListOfTickets;	
-		}
-		}
-		return null;
-	}
-	
-	private boolean updateScreen(Screen screen){
-		ScreenStorage ss = new ScreenStorage();
-		for(int i=0;i<ListOfScreen.size();++i){
-			if(ListOfScreen.get(i).getScreenNo()==screen.getScreenNo()){
-				ListOfScreen.set(i, screen);
-				break;
-			}
-		}
-		try {
-			ss.saveObject("screen.txt", ListOfScreen);
-			return true;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
-	private Booking chooseBooking(ArrayList<Ticket> tickets){
-		System.out.println("Please Enter Your Details");
-		System.out.println("NAME: ");
-		String name = input.nextLine();
-		System.out.println("Email: ");
-		String email = input.nextLine();
-		System.out.println("Phone Number: ");
-		int number = Integer.parseInt(input.nextLine());
-		BookingStorage b = new BookingStorage();
-		DateFormat dateFormat = new SimpleDateFormat("YYYYMMDDhhmm");
-		Date date = new Date();
-		b.writeFile(String.valueOf(date.getTime()), name, email, number,tickets);
-		Booking booking = new Booking(date.toString(), name, email, number);
-		return booking;
-	}
-	
-	private void printBooking(Booking booking,ArrayList<Ticket> tickets){
-		//TODO Create pretty print of Booking
-		booking.display();
-		System.out.println("-----------------Ticket Details-----------------");
-		System.out.println("No of Tickets: "+ tickets.size());
-		tickets.get(0).display();
-		System.out.print("Seats :");
-			for(int i=0;i<tickets.size();++i){
-				System.out.print(tickets.get(i).getTicketNo()+" ");
-			}
-		System.out.println("------------------------------------------------");
-		
-		
-	}
-	
-	private void displayDetailMovie(){
-		System.out.println("Movies on Show!");
-		for(int i=0;i<ListOfMovies.size();++i){
-			Movie temp = (Movie) ListOfMovies.get(i);
-			if(temp.getStatus().substring(8).compareTo("Coming Soon")!=0){
-				temp.display();
-			}
-		}
-	}
-	
 	public void Login() throws ParseException {
 		String filename = "admin1.txt" ;
 	    String username,password;
@@ -540,7 +431,113 @@ public class UserLogin {
 					  }	while(choice1!=0);
 					  
 				case 3:	
-					//TODO Configure
+					int tickettype;
+					int choice13;
+					do
+					{
+					System.out.println("Please choose setting to configure:");
+					System.out.println("1.Ticket Price Rate");
+					System.out.println("2.Public Holidays");
+					System.out.println("3.Back");
+					System.out.print("Choice: ");
+				    choice13 = input.nextInt();
+					input.nextLine();
+					switch(choice13)
+					{
+					case 1:
+						do
+						{
+							User p=new User();
+							System.out.println("====Current Ticket Price====");
+							System.out.println("1) Normal Price");
+							System.out.println("============================");
+						    p.ShowNormalPrice();
+						    System.out.println("2) 3D Price");
+						    System.out.println("============================");
+						    p.Show3DPrice();
+						    System.out.println("============================");
+						    System.out.println("3) Back");
+							System.out.println("============================");
+							System.out.println("Please select index for the type of ticket price you want to change:");
+							tickettype=input.nextInt();
+							input.nextLine();
+							if(tickettype==1)
+							{
+								System.out.println("Normal Price");
+								System.out.println("============");
+								p.ShowNormalPrice();
+								System.out.println("============");
+								p.ShowPriceAttribute(tickettype);
+								System.out.println("Select Attribute to change:");
+								int ticketattribute=input.nextInt();
+								input.nextLine();
+								p.UpdateNormalPrice(ticketattribute);
+								System.out.println("Ticket Price Updated");
+							}	
+							if(tickettype==2)
+							{
+								System.out.println("3D Price");
+								System.out.println("========");
+								p.Show3DPrice();
+								System.out.println("============");
+								p.ShowPriceAttribute(tickettype);
+								System.out.println("Select Attribute to change:");
+								int ticketattribute=input.nextInt();
+								input.nextLine();
+								p.Update3DPrice(ticketattribute);
+								System.out.println("Ticket Price Updated");
+							}	
+						}while(tickettype<3);
+						break;
+					case 2:
+						int holidaychoice;
+						do
+						{
+							User holiday=new User();
+							System.out.println("Current List of Holiday:");
+							System.out.println("ID      Name           Date");
+							System.out.println("===========================");
+							holiday.ShowHoliday();
+							System.out.println();
+							System.out.println("===========================");
+							System.out.println("1.Create New Public Holiday");
+							System.out.println("2.Remove a Public Holiday");
+							System.out.println("3.Back");
+							System.out.println("Enter Choice:");
+							holidaychoice=input.nextInt();
+							input.nextLine();
+							switch(holidaychoice)
+							{
+							case 1:
+								System.out.println("Please enter a Date(dd/mm/yy):");
+								String holidaydate=input.nextLine();
+								System.out.println("Please enter Holiday Name:");
+								String holidayname=input.nextLine();
+								User d=new User();
+								d.CreateHoliday(holidayname, holidaydate);
+								System.out.println("Holiday Created!");
+								break;
+							case 2:
+								User rh=new User();
+								System.out.println("Current List of Holiday:");
+								System.out.println("ID      Name           Date");
+								System.out.println("===========================");
+								rh.ShowHoliday();
+								System.out.println();
+								System.out.println("===========================");
+								System.out.println("Enter holiday id to remove:");
+								int idtoremove=input.nextInt();
+								rh.RemoveHoliday(idtoremove);
+								System.out.println("Holiday Removed");
+								break;
+							
+							}		
+						}while(holidaychoice<3);
+						break;
+					default:
+			 			System.out.println("Please enter a valid choice");
+					}
+					}while(choice13!=3);
 					break;
 				case 4:
 					break;			
@@ -566,6 +563,7 @@ public class UserLogin {
 				System.out.println("(1) Choose by Movie");
 				System.out.println("(2) Choose by CinePlex");
 				subOption = input.nextInt();
+				input.nextLine();
 				if(subOption==1){
 					//Display Showing movies
 					Movie movie=chooseMovie();
@@ -574,53 +572,138 @@ public class UserLogin {
 					// Display Showtimes and Availablity of seats
 					ShowTime showTime = chooseShowTime(Cineplex,movie);
 					//Go to Seating arrangement to book the seats
-					
 					System.out.println("Please Choose your Seats ");
 					int screenNo = showTime.getCinemaId();
-					Screen screen = chooseScreen(screenNo);
-					System.out.println("Enter the No of Tickets: ");
-					int noOfTickets =input.nextInt();
-					ArrayList<Ticket> tickets= chooseTickets(screen,noOfTickets,movie,showTime);
 					
-					// Book Tickets and Get Details for ticket and print inventory.
-					Booking booking  = chooseBooking(tickets);
-					printBooking(booking,tickets);
-					System.out.println("Done! ");
+					int screenI =0;
+					if(ListOfScreen.size()!=0){
+					for(int i=0;i<ListOfScreen.size();++i){
+						if(ListOfScreen.get(i).getScreenNo()== screenNo)
+							screenI = i;
 					}
-				else if(subOption==2){
-					//Print All the Cineplexes with the movie running since we know the movie name as parameter 
-					String Cineplex = chooseCinePlex();
-					//Display Showing movies
-					Movie movie=chooseMovie();
-					// Display Showtimes and Availablity of seats
-					ShowTime showTime = chooseShowTime(Cineplex,movie);
-					//Go to Seating arrangement to book the seats
-					System.out.println("Please Choose your Seats ");
-					int screenNo = showTime.getCinemaId();
-					Screen screen = chooseScreen(screenNo);
+					
+					}
+					else{
+						ListOfScreen.add(new Screen(screenNo));
+					}
 					System.out.println("Enter the No of Tickets: ");
-					int noOfTickets = Integer.parseInt(input.nextLine());
-					ArrayList<Ticket> tickets= chooseTickets(screen,noOfTickets,movie,showTime);
+					int noOfTickets = input.nextInt();
+					input.nextLine();
+					if(ListOfScreen.get(screenI).getSeatsFree
+							() <noOfTickets){
+						System.out.println("There is only"+ListOfScreen.get(screenI).getSeatsFree()+" seats free! Please try again!" );
+					}else{
+					ArrayList<Ticket> ListOfTickets = new ArrayList<>();
+					for(int i=0;i<noOfTickets;++i){
+					ListOfScreen.get(screenI).printScreen();
+					System.out.println("Enter the Row character:");
+					char rowNo = input.nextLine().charAt(0);
+					System.out.println("Enter the Seat Number:");
+					int seatno = Integer.parseInt(input.nextLine());
+					boolean isStudent = false, isElder = false;
+					if(ListOfScreen.get(screenI).AssignSeat(rowNo, seatno)){
+						System.out.println("Are You a Student(Y/N)");
+						String details =input.nextLine();
+						if(details.charAt(0)=='Y'){
+							isStudent = true;
+						}else{
+							System.out.println("Are you above 65? (Y/N)");
+							details = input.nextLine();
+							if(details.charAt(0)=='Y'){
+								isElder = true;
+							}
+						}
+						Ticket ticket = new Ticket(movie.getType(), "Platinum", String.valueOf(rowNo).concat(String.valueOf(seatno)), showTime.getStrDate(), showTime.getStrTime(), showTime.getCineplexName(), showTime.getMovieTitle(), isStudent, isElder);
+						System.out.println("Seat Assigned!");
+						ListOfTickets.add(ticket);
+					}else{
+						System.out.println("Please Try Again!");
+						i--;
+					}
+					}
+					try {
+						ScreenStorage ss = new ScreenStorage();
+						ss.saveObject("screen.txt", ListOfScreen);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					// Book Tickets and Get Details for ticket and print inventory.
-					Booking booking  = chooseBooking(tickets);
-					printBooking(booking,tickets);
+					Random randomGen = new Random();
+					System.out.println("Please Enter Your Details");
+					System.out.println("NAME: ");
+					String name = input.nextLine();
+					System.out.println("Email: ");
+					String email = input.nextLine();
+					System.out.println("Phone Number: ");
+					int number = Integer.parseInt(input.nextLine());
+					BookingStorage b = new BookingStorage();
+					DateFormat dateFormat = new SimpleDateFormat("YYYYMMDDhhmm");
+					Date date = new Date();
+					b.writeFile(String.valueOf(date.getTime()), name, email, number,ListOfTickets);
 					System.out.println("Done! ");
 					}
 				}
-			  else if (custOption==3){
+			}else if (custOption==3){
 				//Display All Movies
-				Movie movie = chooseMovie();
+				ArrayList ListOfMovies = null;
+				MovieStorage ms = new MovieStorage();
+				try {
+					ListOfMovies = ms.readObject();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("File Not Found!" + e.getMessage());
+				}
+				for(int i=0;i<ListOfMovies.size();++i){
+					Movie temp = (Movie) ListOfMovies.get(i);
+					if(temp.getStatus()!="Coming Soon"){
+						System.out.println("("+temp.getMovieId()+")"+temp.getMovietitle());
+					}
+				}
+				System.out.println("Please Choose the Movie ID:");
+				int movieChoice = Integer.parseInt(input.nextLine());
+				int movieI = 0;
+				for(int i=0;i<ListOfMovies.size();++i){
+					Movie temp = (Movie) ListOfMovies.get(i);
+					if(temp.getMovieId()== movieChoice){
+						movieI = i;
+						break;
+					}
+				}
 				System.out.println("Enter Rating for Movie(1-5)");
-				int Rating = input.nextInt();
+				int Rating = Integer.parseInt(input.nextLine());
 				if(Rating<=5&& Rating>=1){
 					System.out.println("Enter Review(Only 1 Para): ");
-					String review = input.next();
-					movie.addReview(review, Rating);
+					String review = input.nextLine();
+					((Movie)ListOfMovies.get(movieI)).addReview(review, Rating);
 				}
 			}
 			break;
 		case 3:
-			displayDetailMovie();
+			System.out.println("Movies on Show!");
+			ArrayList ListOfMovies = null;
+			MovieStorage ms = new MovieStorage();
+			try {
+				ListOfMovies = ms.readObject();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("File Not Found!" + e.getMessage());
+			}
+			for(int i=0;i<ListOfMovies.size();++i){
+				Movie temp = (Movie) ListOfMovies.get(i);
+				if(temp.getStatus().substring(8).compareTo("Coming Soon")!=0){
+					System.out.println(temp.getMovietitle());
+					System.out.println(temp.getType());
+					System.out.println(temp.getDuration()+" minutes");
+					System.out.println("Average Rating: "+ temp.getAvgRating());
+					System.out.println("Ticket Sales : "+ temp.getTicketSales());
+					System.out.println(temp.getDirector());
+					System.out.println(temp.getCast());
+					System.out.println("Synopsis");
+					System.out.println(temp.getSynopsis().substring(10));
+					System.out.println("-----------------------------------------------------------------");
+				}
+			}
 			break;
 		case 4:
 			System.out.println("Program terminating...");
@@ -631,6 +714,14 @@ public class UserLogin {
 		}
 		}while(choice<1 || choice >3);
 	 }//End of Login
-	
-
+	public static void main(String[] args)
+	 {
+		UserLogin ul=new UserLogin();
+		try {
+			ul.Login();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 }
 }

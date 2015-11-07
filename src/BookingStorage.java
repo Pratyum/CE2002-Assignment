@@ -1,4 +1,4 @@
-import java.io.IOException;
+	import java.io.IOException;
 import java.time.LocalDateTime;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -52,7 +52,7 @@ public static final String SEPARATOR = "|";
 				String ShowDate = star.nextToken().trim();
 				String showTime = star.nextToken().trim();
 				int noOfTicket = Integer.parseInt(star.nextToken().trim());
-				for(int j=0;j<noOfTicket;++j){
+				for(int j=0;i<noOfTicket;++i){
 				String ticketNo = star.nextToken().trim();
 				Ticket s = new Ticket(Type, Class, ticketNo, ShowDate, showTime,Venue,movieTitle, price);
 				alr.add(s);
