@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 
 public class Ticket {
 	//-----------------------------------------Data Members
+	private long transactionID;
 	private String typeOfMovie;
 	private String classOfMovie;
 	private double price;
@@ -15,7 +16,8 @@ public class Ticket {
 	private String venue;
 	private String movie;
 	private String showDate;
-	private String BookingID;
+
+	
 	//-----------------------------------------Member Methods
 	//-----------------------------------------Constructor
 	
@@ -26,7 +28,7 @@ public class Ticket {
 //		int hour=Integer.parseInt(showTime.substring(0, 1));
 //		int min=Integer.parseInt(showTime.substring(3, 4));
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-		String dateInString = showDate+" "+showTime+":00";
+		String dateInString = showTime+" "+showDate+":00";
 		Date date = null;
 		try {
 			date = sdf.parse(dateInString);
@@ -52,7 +54,8 @@ public class Ticket {
 		}
 	}
 	
-	public Ticket(String Type ,String ClassOfMovie,String TicketNo,String ShowDate,String ShowTime,String Venue,String Movie,boolean isStudent,boolean isElder){
+	public Ticket(long TransactionID, String Type ,String ClassOfMovie,String TicketNo,String ShowDate,String ShowTime,String Venue,String Movie,boolean isStudent,boolean isElder){
+		transactionID= TransactionID;
 		typeOfMovie = Type;
 		classOfMovie = ClassOfMovie;
 		ticketNo = TicketNo;
@@ -62,7 +65,8 @@ public class Ticket {
 		movie = Movie;
 		price = getPrice(isStudent,isElder);
 	}
-	public Ticket(String Type ,String ClassOfMovie,String TicketNo,String ShowDate,String ShowTime,String Venue,String Movie,double Price){
+	public Ticket(long TransactionID,String Type ,String ClassOfMovie,String TicketNo,String ShowDate,String ShowTime,String Venue,String Movie,double Price){
+		transactionID= TransactionID;
 		typeOfMovie = Type;
 		classOfMovie = ClassOfMovie;
 		ticketNo = TicketNo;
@@ -83,7 +87,7 @@ public class Ticket {
 	
 	//-----------------------------------------Member Functions
 	//-----------------------------------------Get-set Methods
-
+	public long getTransactionID(){return transactionID;}
 	public String getType(){return typeOfMovie;}
 	public String getClassOfMovie(){return classOfMovie;}
 	public double getPrice(){return price;}
@@ -93,6 +97,7 @@ public class Ticket {
 	public String getShowDate(){return showDate;}
 	public String getShowTime(){return showTime;}
 	public String getMovie(){return movie;}
+	
 	
 	public void setType(String Type){typeOfMovie= Type;}
 	public void setClass(String Class){classOfMovie= Class;}

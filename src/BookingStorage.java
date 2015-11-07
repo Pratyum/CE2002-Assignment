@@ -1,4 +1,4 @@
-	import java.io.IOException;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -24,16 +24,18 @@ public static final String SEPARATOR = "|";
 				String st = (String)stringArray.get(i);
 				// get individual 'fields' of the string separated by SEPARATOR
 				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
-				String TID = star.nextToken().trim();
 				String  name = star.nextToken().trim();	// first token
 				String  email = star.nextToken().trim();	// second token
 				int  number = Integer.parseInt(star.nextToken().trim()); // third token
-				Booking b = new Booking(TID,name,email,number);
+				long TID = Long.parseLong(star.nextToken().trim());
+				Booking b = new Booking(name,email,number,TID);
+	
+				//Booking b = new Booking("TEST","TEST",1234556,1231231);
 				alr.add(b);
 			}
 			return alr ;
 	}
-	public static ArrayList readTicket() throws IOException {
+	/*public static ArrayList readTicket() throws IOException {
 		// read String from text file
 		ArrayList stringArray = (ArrayList)read();
 		ArrayList alr = new ArrayList();
@@ -52,15 +54,15 @@ public static final String SEPARATOR = "|";
 				String ShowDate = star.nextToken().trim();
 				String showTime = star.nextToken().trim();
 				int noOfTicket = Integer.parseInt(star.nextToken().trim());
-				for(int j=0;i<noOfTicket;++i){
+				for(int j=0;j<noOfTicket;++j){
 				String ticketNo = star.nextToken().trim();
 				Ticket s = new Ticket(Type, Class, ticketNo, ShowDate, showTime,Venue,movieTitle, price);
 				alr.add(s);
 				}
 			}
 			return alr ;
-	}
-	public static void saveBooking(List al, List as) throws IOException {
+	}*/
+/*	public static void saveBooking(List al, List as) throws IOException {
 		List alw = new ArrayList() ;
 
         for (int i = 0 ; i < al.size(); i++) {
@@ -113,7 +115,7 @@ public static final String SEPARATOR = "|";
 		}
         	
 			write(alw);
-	}
+	}*/
 
   /** Write fixed content to the given file. */
   public static void write(List data) throws IOException  {
@@ -142,11 +144,11 @@ public static final String SEPARATOR = "|";
 	    return data;
 	  }
 
-  	public void print(int number)  {
+/*  	public void print(int number)  {
 			try {
 				int transcation = 1;
 				ArrayList al = BookingStorage.readBooking();
-				ArrayList as = BookingStorage.readTicket();
+				//ArrayList as = BookingStorage.readTicket();
 				
 				for (int i = 0 ; i < al.size() ; i++) {
 						Booking b = (Booking)al.get(i);
@@ -168,17 +170,15 @@ public static final String SEPARATOR = "|";
 			}catch (IOException e) {
 				System.out.println("IOException > " + e.getMessage());
 			}
-	  }
-  	public void writeFile(String TID, String name,String email,int number,ArrayList<Ticket> s) {
+	  }*/
+  	public void writeFile(String name,String email,int number,long TID) {
 		try {
 			ArrayList  al = BookingStorage.readBooking();
-			ArrayList  as = BookingStorage.readTicket();
-			Booking b = new Booking(TID,name,email,number);
+			//ArrayList  as = BookingStorage.readTicket();
+			Booking b = new Booking(name,email,number,TID);
 			al.add(b);
-			for(int i=0;i<s.size();++i){
-			as.add(s.get(i));
-			}
-			BookingStorage.saveBooking(al,as);
+	
+			//BookingStorage.saveBooking(al,as);
 			
 			
 		} catch (IOException e) {

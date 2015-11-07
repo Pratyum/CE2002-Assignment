@@ -1,0 +1,6 @@
+123201511051010|3D|Platinum|A2|11-5-2015|10:00:00|GV Jurong Point|Hunger Games|10.0
+123201511051010|3D|Platinum|A3|11-5-2015|10:00:00|GV Jurong Point|Hunger Games|10.0
+123201511051010|3D|Platinum|A4|11-5-2015|10:00:00|GV Jurong Point|Hunger Games|10.0
+123201511051012|3D|Platinum|A4|11-5-2015|10:00:00|GV Jurong Point|Crimson Peak|10.0
+123201511051013|3D|Platinum|A4|11-5-2015|10:00:00|GV Jurong Point|Crimson Peak|10.0
+123201511051014|3D|Platinum|A4|11-5-2015|10:00:00|GV Jurong Point|Crimson Peak|10.0

@@ -9,9 +9,7 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
-
 public class UserLogin {
-	public UserLogin(){};
 	public User check=null;
 	private String username;
 	private String password;
@@ -430,114 +428,7 @@ public class UserLogin {
 							 }		
 					  }	while(choice1!=0);
 					  
-				case 3:	
-					int tickettype;
-					int choice13;
-					do
-					{
-					System.out.println("Please choose setting to configure:");
-					System.out.println("1.Ticket Price Rate");
-					System.out.println("2.Public Holidays");
-					System.out.println("3.Back");
-					System.out.print("Choice: ");
-				    choice13 = input.nextInt();
-					input.nextLine();
-					switch(choice13)
-					{
-					case 1:
-						do
-						{
-							User p=new User();
-							System.out.println("====Current Ticket Price====");
-							System.out.println("1) Normal Price");
-							System.out.println("============================");
-						    p.ShowNormalPrice();
-						    System.out.println("2) 3D Price");
-						    System.out.println("============================");
-						    p.Show3DPrice();
-						    System.out.println("============================");
-						    System.out.println("3) Back");
-							System.out.println("============================");
-							System.out.println("Please select index for the type of ticket price you want to change:");
-							tickettype=input.nextInt();
-							input.nextLine();
-							if(tickettype==1)
-							{
-								System.out.println("Normal Price");
-								System.out.println("============");
-								p.ShowNormalPrice();
-								System.out.println("============");
-								p.ShowPriceAttribute(tickettype);
-								System.out.println("Select Attribute to change:");
-								int ticketattribute=input.nextInt();
-								input.nextLine();
-								p.UpdateNormalPrice(ticketattribute);
-								System.out.println("Ticket Price Updated");
-							}	
-							if(tickettype==2)
-							{
-								System.out.println("3D Price");
-								System.out.println("========");
-								p.Show3DPrice();
-								System.out.println("============");
-								p.ShowPriceAttribute(tickettype);
-								System.out.println("Select Attribute to change:");
-								int ticketattribute=input.nextInt();
-								input.nextLine();
-								p.Update3DPrice(ticketattribute);
-								System.out.println("Ticket Price Updated");
-							}	
-						}while(tickettype<3);
-						break;
-					case 2:
-						int holidaychoice;
-						do
-						{
-							User holiday=new User();
-							System.out.println("Current List of Holiday:");
-							System.out.println("ID      Name           Date");
-							System.out.println("===========================");
-							holiday.ShowHoliday();
-							System.out.println();
-							System.out.println("===========================");
-							System.out.println("1.Create New Public Holiday");
-							System.out.println("2.Remove a Public Holiday");
-							System.out.println("3.Back");
-							System.out.println("Enter Choice:");
-							holidaychoice=input.nextInt();
-							input.nextLine();
-							switch(holidaychoice)
-							{
-							case 1:
-								System.out.println("Please enter a Date(dd/mm/yy):");
-								String holidaydate=input.nextLine();
-								System.out.println("Please enter Holiday Name:");
-								String holidayname=input.nextLine();
-								User d=new User();
-								d.CreateHoliday(holidayname, holidaydate);
-								System.out.println("Holiday Created!");
-								break;
-							case 2:
-								User rh=new User();
-								System.out.println("Current List of Holiday:");
-								System.out.println("ID      Name           Date");
-								System.out.println("===========================");
-								rh.ShowHoliday();
-								System.out.println();
-								System.out.println("===========================");
-								System.out.println("Enter holiday id to remove:");
-								int idtoremove=input.nextInt();
-								rh.RemoveHoliday(idtoremove);
-								System.out.println("Holiday Removed");
-								break;
-							
-							}		
-						}while(holidaychoice<3);
-						break;
-					default:
-			 			System.out.println("Please enter a valid choice");
-					}
-					}while(choice13!=3);
+				case 3:			
 					break;
 				case 4:
 					break;			
@@ -562,8 +453,7 @@ public class UserLogin {
 			  if(custOption==1){
 				System.out.println("(1) Choose by Movie");
 				System.out.println("(2) Choose by CinePlex");
-				subOption = input.nextInt();
-				input.nextLine();
+				subOption = Integer.parseInt(input.nextLine());
 				if(subOption==1){
 					//Display Showing movies
 					Movie movie=chooseMovie();
@@ -587,8 +477,7 @@ public class UserLogin {
 						ListOfScreen.add(new Screen(screenNo));
 					}
 					System.out.println("Enter the No of Tickets: ");
-					int noOfTickets = input.nextInt();
-					input.nextLine();
+					int noOfTickets = Integer.parseInt(input.nextLine());
 					if(ListOfScreen.get(screenI).getSeatsFree
 							() <noOfTickets){
 						System.out.println("There is only"+ListOfScreen.get(screenI).getSeatsFree()+" seats free! Please try again!" );
@@ -613,7 +502,8 @@ public class UserLogin {
 								isElder = true;
 							}
 						}
-						Ticket ticket = new Ticket(movie.getType(), "Platinum", String.valueOf(rowNo).concat(String.valueOf(seatno)), showTime.getStrDate(), showTime.getStrTime(), showTime.getCineplexName(), showTime.getMovieTitle(), isStudent, isElder);
+						int TID=0;
+						Ticket ticket = new Ticket(TID,movie.getType(), "Platinum", String.valueOf(rowNo).concat(String.valueOf(seatno)), showTime.getStrDate(), showTime.getStrTime(), showTime.getCineplexName(), showTime.getMovieTitle(), isStudent, isElder);
 						System.out.println("Seat Assigned!");
 						ListOfTickets.add(ticket);
 					}else{
@@ -622,7 +512,7 @@ public class UserLogin {
 					}
 					}
 					try {
-						ScreenStorage ss = new ScreenStorage();
+						ScreenStorage ss=new ScreenStorage();
 						ss.saveObject("screen.txt", ListOfScreen);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -640,7 +530,8 @@ public class UserLogin {
 					BookingStorage b = new BookingStorage();
 					DateFormat dateFormat = new SimpleDateFormat("YYYYMMDDhhmm");
 					Date date = new Date();
-					b.writeFile(String.valueOf(date.getTime()), name, email, number,ListOfTickets);
+					//b.writeFile(String.valueOf(date.getTime()), name, email, number,1234);
+					b.writeFile( name, email, number,1234);
 					System.out.println("Done! ");
 					}
 				}
@@ -713,15 +604,5 @@ public class UserLogin {
 			break;
 		}
 		}while(choice<1 || choice >3);
-	 }//End of Login
-	public static void main(String[] args)
-	 {
-		UserLogin ul=new UserLogin();
-		try {
-			ul.Login();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	 }
+	 }//End of Main
 }
