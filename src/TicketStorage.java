@@ -55,7 +55,32 @@ public class TicketStorage extends StorageHandler{
 	@Override
 	public void saveObject(String filename, List al) throws IOException {
 		// TODO Auto-generated method stub
-		
+		List alw = new ArrayList() ;
+		for (int i = 0 ; i < al.size() ; i++) {
+			Ticket ticket= (Ticket)al.get(i);
+			StringBuilder st =  new StringBuilder() ;
+			//if(i==al.size()-1){
+				st.append(ticket.getTransactionID());
+				st.append(SEPARATOR);
+				st.append(ticket.getType());
+				st.append(SEPARATOR);
+				st.append(ticket.getClassOfMovie());
+				st.append(SEPARATOR);
+				st.append(ticket.getTicketNo());
+				st.append(SEPARATOR);
+				st.append(ticket.getShowDate());
+				st.append(SEPARATOR);
+				st.append(ticket.getShowTime());
+				st.append(SEPARATOR);
+				st.append(ticket.getVenue());
+				st.append(SEPARATOR);
+				st.append(ticket.getMovie());
+				st.append(SEPARATOR);
+				st.append(ticket.getPrice());
+				st.append(SEPARATOR);
+				alw.add(st.toString()) ;
+		}
+		write(filename,alw);
 	}
 
 	

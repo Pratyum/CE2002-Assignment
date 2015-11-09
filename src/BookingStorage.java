@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.io.FileInputStream;
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -9,184 +10,61 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class BookingStorage {
-	
-public static final String SEPARATOR = "|";
-
-	public BookingStorage() {
+public class BookingStorage extends StorageHandler{
+	public static final String SEPARATOR = " ";
+	public static final String SEPARATOR1 = "|";
+	public BookingStorage(){
 	}
-	public static ArrayList readBooking() throws IOException {
-		// read String from text file
-		ArrayList stringArray = (ArrayList)read();
-		ArrayList alr = new ArrayList();
+	@Override
+	public ArrayList<Booking> readObject() throws IOException, ParseException {
+		ArrayList<String> stringArray = (ArrayList<String>) read("booking.txt");
+		ArrayList<Booking> alr = new ArrayList<>();
 
         for (int i = 0 ; i <stringArray.size() ; i++) {
 				String st = (String)stringArray.get(i);
 				// get individual 'fields' of the string separated by SEPARATOR
-				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
+				StringTokenizer star = new StringTokenizer(st , SEPARATOR1);	// pass in the string to the string tokenizer using delimiter ","
 				String  name = star.nextToken().trim();	// first token
 				String  email = star.nextToken().trim();	// second token
 				int  number = Integer.parseInt(star.nextToken().trim()); // third token
 				long TID = Long.parseLong(star.nextToken().trim());
-				Booking b = new Booking(name,email,number,TID);
-	
-				//Booking b = new Booking("TEST","TEST",1234556,1231231);
+				double Price = Double.parseDouble(star.nextToken().trim());
+				Booking b = new Booking(name,email,number,Price,TID);
 				alr.add(b);
 			}
 			return alr ;
 	}
-	/*public static ArrayList readTicket() throws IOException {
-		// read String from text file
-		ArrayList stringArray = (ArrayList)read();
-		ArrayList alr = new ArrayList();
-
-        for (int i = 0 ; i < stringArray.size() ; i++) {
-				String st = (String)stringArray.get(i);
-				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	// pass in the string to the string tokenizer using delimiter ","
-				String TID = star.nextToken().trim();
-				String temp = (TID.substring(0, TID.indexOf(':',0)));
-				String Venue = temp.substring(0, temp.length()- 2);
-				for(int j=0; j<3; j++) star.nextToken().trim();
-				String Type = star.nextToken().trim();//forth token
-				String Class = star.nextToken().trim();
-				String movieTitle = star.nextToken().trim(); 
-				double price = Double.parseDouble(star.nextToken().trim());
-				String ShowDate = star.nextToken().trim();
-				String showTime = star.nextToken().trim();
-				int noOfTicket = Integer.parseInt(star.nextToken().trim());
-				for(int j=0;j<noOfTicket;++j){
-				String ticketNo = star.nextToken().trim();
-				Ticket s = new Ticket(Type, Class, ticketNo, ShowDate, showTime,Venue,movieTitle, price);
-				alr.add(s);
-				}
-			}
-			return alr ;
-	}*/
-/*	public static void saveBooking(List al, List as) throws IOException {
-		List alw = new ArrayList() ;
-
-        for (int i = 0 ; i < al.size(); i++) {
-        		StringBuilder st =  new StringBuilder() ;
+	@Override
+	public void saveFile() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void print(ArrayList a) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void saveObject(String filename, List al) throws IOException {
+		// TODO Auto-generated method stub
+		ArrayList<String> alw = new ArrayList<>() ;
+	    for (int i = 0 ; i < al.size() ; i++) {
 				Booking b = (Booking)al.get(i);
-				Ticket s = (Ticket)as.get(i);
-				if (s.getVenue()!=null) {
-					st.append(s.getVenue().trim()+b.getCurrentTime().trim());
-					st.append(SEPARATOR);
+				StringBuilder st =  new StringBuilder() ;
 					st.append(b.getName().trim());
-					st.append(SEPARATOR);
+					st.append(SEPARATOR1);
 					st.append(b.getEmail().trim());
-					st.append(SEPARATOR);
-					st.append(b.getNumber());
-					st.append(SEPARATOR);
-					st.append(s.getType().trim());
-					st.append(SEPARATOR);
-					st.append(s.getClassOfMovie().trim());
-					st.append(SEPARATOR);
-					st.append(s.getMovie().trim());
-					st.append(SEPARATOR);
-					st.append(s.getPrice());
-					st.append(SEPARATOR);
-					st.append(s.getShowDate().trim());
-					st.append(SEPARATOR);
-					st.append(s.getShowTime().trim());
-					st.append(SEPARATOR);
-					
-					
-					alw.add(st.toString());
-				}
-				else {
-					st.append(b.getCurrentTime().trim());
-					st.append(SEPARATOR);
-					st.append(b.getName().trim());
-					st.append(SEPARATOR);
-					st.append(b.getEmail().trim());
-					st.append(SEPARATOR);
-					st.append(b.getNumber());
-					st.append(SEPARATOR);
-					st.append(s.getMovie().trim());
-					st.append(SEPARATOR);
-					st.append(s.getPrice());
-					st.append(SEPARATOR);
-					st.append(s.getTicketNo().trim());
-					st.append(SEPARATOR);
-					st.append(s.getShowTime().trim());
-					alw.add(st.toString());
-				}
-		}
-        	
-			write(alw);
-	}*/
-
-  /** Write fixed content to the given file. */
-  public static void write(List data) throws IOException  {
-    PrintWriter out = new PrintWriter(new FileWriter("booking.txt"));
-
-    try {
-		for (int i =0; i < data.size() ; i++) {
-      		out.println((String)data.get(i));
-		}
-    }
-    finally {
-      out.close();
-    }
-  }
-  public static List read() throws IOException {
-		List data = new ArrayList() ;
-	    Scanner scanner = new Scanner(new FileInputStream("booking.txt"));
-	    try {
-	      while (scanner.hasNextLine()){
-	        data.add(scanner.nextLine());
-	      }
-	    }
-	    finally{
-	      scanner.close();
-	    }
-	    return data;
-	  }
-
-/*  	public void print(int number)  {
-			try {
-				int transcation = 1;
-				ArrayList al = BookingStorage.readBooking();
-				//ArrayList as = BookingStorage.readTicket();
-				
-				for (int i = 0 ; i < al.size() ; i++) {
-						Booking b = (Booking)al.get(i);
-						Ticket s = (Ticket)as.get(i);
-							if(number == b.getNumber()){
-							System.out.println("TID : " + b.getCurrentTime());
-							System.out.println("Name : " + b.getName());
-							System.out.println("Transcation ID : " + transcation);
-							System.out.println("Email : " + b.getEmail() );
-							System.out.println("Contact : " + b.getNumber() );
-							System.out.println("Movie Title : " + s.getMovie());
-							System.out.println("Price : $" + s.getPrice());
-							System.out.println("Ticket No : " + s.getTicketNo());
-							System.out.println("ShowTime : " + s.getShowTime());
-							transcation++;
-							}
-				}
-
-			}catch (IOException e) {
-				System.out.println("IOException > " + e.getMessage());
+					st.append(SEPARATOR1);
+					st.append(String.valueOf(b.getNumber()).trim());
+					st.append(SEPARATOR1);
+					st.append(String.valueOf(b.getTID()).trim());
+					st.append(SEPARATOR1);
+					st.append(String.valueOf(b.getPrice()).trim());
+					st.append(SEPARATOR1);
+				alw.add(st.toString()) ;
 			}
-	  }*/
-  	public void writeFile(String name,String email,int number,long TID) {
-		try {
-			ArrayList  al = BookingStorage.readBooking();
-			//ArrayList  as = BookingStorage.readTicket();
-			Booking b = new Booking(name,email,number,TID);
-			al.add(b);
-	
-			//BookingStorage.saveBooking(al,as);
-			
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-  	}
+		write(filename,alw);
+	}
 
 
 }

@@ -1,3 +1,4 @@
-1|Movie: Testing|Type: 3D|Rating: PG13|Status: Now Showing|Synopsis: This is a test|Director: Testing|Cast: Test123|Duration: 140|
-2|Movie: Testing 1|Type: Regular|Rating: 3|Status: Coming Soon|Synopsis: Thsi is to check if more than one object go in|Director: tester|Cast: test1234|Duration: 120|
-3|Movie: testing2|Type: regular|Rating: R|Status: Now Showing|Synopsis: This is a test|Director: testing|Cast: tester|Duration: 130|
+1|Spectre|2D|3.0|Now Showing|James Bond!|I just wanna know|Daniel Criag|150|
+2|Hunger Games|3D|U|End of Showing|This is a test|I really dont care at all|Jennifer someone|112|
+3|Star Wars|3D|3.0|Now Showing|Test|XYZ|jedi|120|
+4|Hinger Games'|3D|pg13|Now Showing|shit movie|your mom|jlaw|1000|

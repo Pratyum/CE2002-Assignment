@@ -7,12 +7,13 @@ public class Screen {
 	private int numSeats;
 	private int seatsFree;
 	private Seat[][] seats;
-	private SeatingReadWrite readWrite;
+	private String strDate;
 	private int screenNo; // Primary key
 	//-----------------------------------------Members Functions
 	//-----------------------------------------Constructor
-	public Screen(int ScreenNo){
+	public Screen(int ScreenNo,String StrDate){
 		screenNo = ScreenNo;
+		strDate = StrDate;
 		numSeats = 200;
 		seatsFree = 200;
 		seats = new Seat[10][20];
@@ -29,6 +30,8 @@ public class Screen {
 	public int getSeatsFree(){return seatsFree;}
 	public int getScreenNo() {return screenNo;}
 	public int getNumSeats() {return numSeats;}
+	public String getStrDate() {return strDate;}
+	public void setStrDate(String StrDate){strDate = StrDate;}
 	//-----------------------------------------Other Methods
 	public void printScreen(){
 		for(int i=0;i<10;++i){

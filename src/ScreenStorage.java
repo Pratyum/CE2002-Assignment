@@ -14,7 +14,8 @@ public class ScreenStorage extends StorageHandler{
 			String st = stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
 			int screenNo = Integer.parseInt(star.nextToken().trim());
-			Screen s = new Screen(screenNo);
+			String showDate = star.nextToken().trim();
+			Screen s = new Screen(screenNo,showDate);
 			while(star.hasMoreTokens()){
 				String seat = star.nextToken().trim();
 				char rowNo = seat.charAt(0);
@@ -48,6 +49,8 @@ public class ScreenStorage extends StorageHandler{
 				StringBuilder st =  new StringBuilder() ;
 					st.append(s.getScreenNo());
 					st.append(SEPARATOR);
+					st.append(s.getStrDate());
+					st.append(SEPARATOR);
 					ArrayList<String> seats = s.listFreeSeats();
 					for(int j=0;j<seats.size();++j){
 						st.append(seats.get(j));
@@ -57,5 +60,18 @@ public class ScreenStorage extends StorageHandler{
 			}
 			write(filename,alw);
 	}
-
+	public static void main(String Agrs[]){
+		ScreenStorage ss = new ScreenStorage();
+		try {
+			ArrayList<Screen> screens= ss.readObject();
+			for(int i=0;i<screens.size();++i){
+				System.out.println(screens.get(i).getStrDate());
+				System.out.println(screens.get(i).getScreenNo());
+				System.out.println(screens.get(i).getSeatsFree());
+			}
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

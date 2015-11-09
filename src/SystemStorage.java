@@ -9,7 +9,7 @@ public class SystemStorage extends StorageHandler{
 	public static final String SEPARATOR1 = "|";
 	public static final String SEPARATOR2 = ":";
 	// an example of reading
-		public static ArrayList readPrice(String filename) throws IOException {
+		public ArrayList readPrice(String filename) throws IOException {
 			// read String from text file
 			ArrayList stringArray = (ArrayList)read(filename);
 			ArrayList alr = new ArrayList() ;// to store Professors data
@@ -35,7 +35,7 @@ public class SystemStorage extends StorageHandler{
 		}
 		
 		// an example of saving
-		  public static void saveupdatedPrice(String filename, List al) throws IOException {
+		  public void saveupdatedPrice(String filename, List al) throws IOException {
 		  		List alw = new ArrayList() ;// to store Professors data
 
 		          for (int i = 0 ; i < al.size() ; i++) {
@@ -53,7 +53,7 @@ public class SystemStorage extends StorageHandler{
 		  	}
 		  
 		  // an example of reading
-			public static ArrayList readHoliday(String filename) throws IOException {
+			public ArrayList readHoliday(String filename) throws IOException {
 				// read String from text file
 				ArrayList stringArray = (ArrayList)read(filename);
 				ArrayList alr = new ArrayList() ;// to store Professors data
@@ -80,7 +80,7 @@ public class SystemStorage extends StorageHandler{
 			}
 			
 			// an example of saving
-			  public static void saveupdatedHoliday(String filename, List al) throws IOException {
+			  public void saveupdatedHoliday(String filename, List al) throws IOException {
 			  		List alw = new ArrayList() ;// to store Professors data
 
 			          for (int i = 0 ; i < al.size() ; i++) {

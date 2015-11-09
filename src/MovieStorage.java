@@ -29,18 +29,57 @@ public class MovieStorage extends StorageHandler{
 				Movie m = new Movie(movieId,movietitle,type,rating,status,synopsis,director,cast,duration);
 				alr.add(m) ;
                 }
-			}		
+			}
+        ArrayList<Review> ReviewList = this.readReview();
+        for(int i=0;i<alr.size();++i){
+        	ArrayList<Review> reviews = new ArrayList<>();
+        	for(int j=0;j<ReviewList.size();++j){
+        		if(alr.get(i).getMovieId()==ReviewList.get(j).getMovieID()){
+        			reviews.add(ReviewList.get(j));
+        		}
+        	}
+        	alr.get(i).setReview(reviews);
+        }
 			return alr ;
-	
 	}
 	
+	public ArrayList<Review> readReview(){
+		ArrayList<Review> ReviewList = new ArrayList<>();
+		ArrayList<String> stringArray = new ArrayList<>();
+		try {
+			stringArray = (ArrayList<String>)read("review.txt");
+		} catch (IOException e) {
+			// Auto-generated catch block
+			e.printStackTrace();
+		}
+		 for (int i = 0 ; i < stringArray.size() ; i++) {
+				String st = stringArray.get(i);
+				// get individual 'fields' of the string separated by SEPARATOR
+				StringTokenizer star = new StringTokenizer(st , SEPARATOR1);	// pass in the string to the string tokenizer using delimiter ","
+             while(star.hasMoreTokens()){
+				int  MovieID = Integer.parseInt(star.nextToken().trim());	
+				int  ReviewRating = Integer.parseInt(star.nextToken().trim());	
+				String  ReviewText = star.nextToken().trim();
+				Review r = new Review(ReviewText, ReviewRating, MovieID);
+				ReviewList.add(r) ;
+             }
+			}		
+			return ReviewList ;
+		
+	}
 	
-	 public static void saveupdatedMovie(String filename, List al) throws IOException {
+	public void saveupdatedMovie(String filename, List al) throws IOException {
 	  		List alw = new ArrayList() ;
-
+	  		ArrayList<Review> reviews = new ArrayList<>();
 	          for (int i = 0 ; i < al.size() ; i++) {
 	  				Movie m = (Movie)al.get(i);
-	  				
+	  				if(m.getReviews()!=null){
+	  					if(m.getReviews().size()!=0){
+						for(int j=0;j<m.getReviews().size();++j){
+							reviews.add(m.getReviews().get(j));
+						}
+	  					}
+						}
 	  					StringBuilder st =  new StringBuilder() ;
   						st.append(m.getMovieId());
   						st.append(SEPARATOR1);	  					
@@ -63,8 +102,11 @@ public class MovieStorage extends StorageHandler{
 	  				
 	  				alw.add(st.toString()) ;
 	  			}
+	          	if(reviews.size()!=0){
+			    	saveReview("review.txt", reviews);
+			    	}
 	  			write(filename,alw);
-	  	}
+	 }
 
 	 public void printMovieTitle(){
 			try {
@@ -82,34 +124,15 @@ public class MovieStorage extends StorageHandler{
 			}catch (IOException e) {
 				System.out.println("IOException > " + e.getMessage());
 			}
-		}
-	 public void saveObject(String filename, List al) throws IOException {
-			List alw = new ArrayList() ;
-
+	}
+	
+	public void saveObject(String filename, List al) throws IOException {
+			ArrayList<String> alw = new ArrayList<>() ;
+			ArrayList<Review> review = new ArrayList<>();
 		    for (int i = 0 ; i < al.size() ; i++) {
 					Movie m = (Movie)al.get(i);
+					
 					StringBuilder st =  new StringBuilder() ;
-					if(i==al.size()-1){
-						st.append(m.getMovieId());
-						st.append(SEPARATOR1);
-						st.append("Movie: "+m.getMovietitle().trim());
-						st.append(SEPARATOR1);
-						st.append("Type: "+m.getType().trim());
-						st.append(SEPARATOR1);
-						st.append("Rating: ").append(m.getRating().trim());
-						st.append(SEPARATOR1);
-						st.append("Status: ").append(m.getStatus().trim());
-						st.append(SEPARATOR1);
-						st.append("Synopsis: ").append(m.getSynopsis().trim());
-						st.append(SEPARATOR1);
-						st.append("Director: ").append(m.getDirector().trim());
-						st.append(SEPARATOR1);
-						st.append("Cast: ").append(m.getCast().trim());
-						st.append(SEPARATOR1);
-						st.append("Duration: ").append(m.getDuration().trim());
-	  					st.append(SEPARATOR1);
-					}
-					else{
 						st.append(m.getMovieId());
 						st.append(SEPARATOR1);
 						st.append(m.getMovietitle().trim());
@@ -128,11 +151,33 @@ public class MovieStorage extends StorageHandler{
 						st.append(SEPARATOR1);
 						st.append(m.getDuration().trim());
 	  					st.append(SEPARATOR1);
-					}
+	  					if(m.getReviews()!=null){
+	  					if(m.getReviews().size()!=0){
+	  						for(int j=0;j<m.getReviews().size();++j){
+	  							review.add(m.getReviews().get(j));
+	  						}
+	  					}
+	  					}
 					alw.add(st.toString()) ;
 				}
-				write(filename,alw);
-		}
+		    saveReview("review.txt", review);
+			write(filename,alw);
+	}
+	public void  saveReview(String fileName ,ArrayList<Review> reviews) throws IOException{
+		 ArrayList<String> alw = new ArrayList<>() ;
+		 for (int i = 0 ; i < reviews.size() ; i++) {
+				Review r = reviews.get(i);
+				StringBuilder st =  new StringBuilder() ;
+					st.append(r.getMovieID());
+					st.append(SEPARATOR1);
+					st.append(r.getReviewRating());
+					st.append(SEPARATOR1);
+					st.append(r.getReviewText().trim());
+					st.append(SEPARATOR1);
+				alw.add(st.toString());
+			}
+			write(fileName,alw);
+	 }
 	 
 	 
 	@Override

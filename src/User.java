@@ -74,8 +74,8 @@ public void ShowMovie(int choice) throws ParseException{
 		if(choice==1){
 		for (int i = 0 ; i < al.size() ; i++) {
 				Movie m = (Movie)al.get(i);
-				if(m.getStatus().compareTo("Status: Now Showing")==0){
-				System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle()+ " "+m.getStatus());}
+				if(m.getStatus().compareTo("Now Showing")==0){
+				System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle());}
 			}		
 		}
 		
@@ -83,17 +83,25 @@ public void ShowMovie(int choice) throws ParseException{
 		else if(choice==2){
 		for (int i = 0 ; i < al.size() ; i++) {
 				Movie m = (Movie)al.get(i);
-				if(m.getStatus().compareTo("Status: End of Showing")==0)
-				System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle()+" "+m.getStatus());
+				if(m.getStatus().compareTo("End of Showing")==0)
+				System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle());
 				
 			}		
 		}
-		
+		//show coming soon movies
+		else if(choice==2){
+			for (int i = 0 ; i < al.size() ; i++) {
+					Movie m = (Movie)al.get(i);
+					if(m.getStatus().compareTo("Coming Soon")==0)
+					System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle());
+					
+				}		
+			}
 		//show all movies
 		else if(choice==3){
 		for (int i = 0 ; i < al.size() ; i++) {
 				Movie m = (Movie)al.get(i);
-				System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle()+" "+m.getStatus());
+				System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle()+"  Status:"+m.getStatus());
 			}		
 		}
 		
@@ -115,13 +123,13 @@ public void ChooseEditMovie(int moviechoice){
 				Movie m = (Movie)al.get(moviechoice-1);
 				if (m.getMovieId()==moviechoice){
 				System.out.println("Movie Id: "+m.getMovieId());
-				System.out.println(i+1+") "+m.getMovietitle());
-				System.out.println(i+2+") "+m.getType());
-				System.out.println(i+3+") "+m.getRating());
-				System.out.println(i+4+") "+m.getStatus());
-				System.out.println(i+5+") "+m.getSynopsis());
-				System.out.println(i+6+") "+m.getDirector());
-				System.out.println(i+7+") "+m.getCast());
+				System.out.println(i+1+")Movie Title: "+m.getMovietitle());
+				System.out.println(i+2+")Movie Type "+m.getType());
+				System.out.println(i+3+")Movie Rating: "+m.getRating());
+				System.out.println(i+4+")Movie Status: "+m.getStatus());
+				System.out.println(i+5+")Synopsis: "+m.getSynopsis());
+				System.out.println(i+6+")Director: "+m.getDirector());
+				System.out.println(i+7+")Cast: "+m.getCast());
 				}
 				break;				
 		}
@@ -140,7 +148,6 @@ public void UpdateMovie(int attribute,int moviechoice){
 		int id=0;
 		String mo=null,ty=null,ra=null,st=null,sy=null,di=null,ca= null,dur=null;		
 		
-		for (int i = 0 ; i < al.size() ; i++) {
 				Movie m = (Movie)al.get(moviechoice-1);
 				id=m.getMovieId();
 				mo=m.getMovietitle();
@@ -156,53 +163,46 @@ public void UpdateMovie(int attribute,int moviechoice){
 				case 1:				
 					System.out.println("Enter Movie Title: ");
 					String movietitle=input.nextLine();
-					mo=mo.replace(mo, movietitle);
-					mo="Movie: "+mo;					
+					mo=mo.replace(mo, movietitle);	
 					break;		
 				case 2:
 					System.out.println("Enter Type: ");
 					String type=input.nextLine();
 					ty=ty.replace(ty, type);
-					ty="Type: "+ty;
 					break;
 				case 3:				
 					System.out.println("Enter Rating: ");
 					String rating=input.nextLine();
 					ra=ra.replace(ra,rating);
-					ra="Rating: "+ra;
 					break;
 				case 4:
 					System.out.println("Enter Status: ");
 					String status=input.nextLine();
 					st=st.replace(st, status);
-					st="Status: "+st;
 					break;
 				case 5:
 					System.out.println("Enter Synopsis: ");
 					String synopsis=input.nextLine();
 					sy=sy.replace(sy, synopsis);
-					sy="Synopsis: "+sy;
 					break;
 				case 6:
 					System.out.println("Enter Director: ");
 					String director=input.nextLine();
 					di=di.replace(di, director);
-					di="Director: "+di;
 					break;
 				case 7:
 					System.out.println("Enter Cast: ");
 					String cast=input.nextLine();
 					ca=ca.replace(ca, cast);
-					ca="Cast: "+ca;
 					break;
 				case 8:
 					System.out.println("Enter Duration(in Mins): ");
 					String duration=input.nextLine();
 					dur=dur.replace(dur,duration);
-					dur="Duration(in Mins): "+dur;
+					break;
+				default:
 					break;
 				}
-		}
 		
 		al.remove(moviechoice-1);
 		Movie newmovie=new Movie(id,mo,ty,ra,st,sy,di,ca,dur);
@@ -234,7 +234,6 @@ public void RemoveMovie(int moviechoice){
 				ca=m.getCast();
 				dur=m.getDuration();
 				st=st.replace(st, "End of Showing");
-				st="Status: "+st;
 				break;
 			
 		}
@@ -242,8 +241,8 @@ public void RemoveMovie(int moviechoice){
 		Movie newmovie=new Movie(id,mo,ty,ra,st,sy,di,ca,dur);
 		al.add(moviechoice-1, newmovie);
 		
-		// write Professor record/s to file.
-		MovieStorage.saveupdatedMovie("movie.txt", al);
+		// write Movie record/s to file.
+		ms.saveupdatedMovie("movie.txt", al);
 	}catch (IOException e) {
 		System.out.println("IOException > " + e.getMessage());
 	}
@@ -252,8 +251,6 @@ public void RemoveMovie(int moviechoice){
 
 
 public void showShowTime() throws IOException, ParseException{
-	SimpleDateFormat dayFormat = new SimpleDateFormat("dd-MM-yyyy");
-	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 	ShowTimeStorage sts= new ShowTimeStorage();
 	ArrayList al=new ArrayList();
 	al = sts.readObject() ;	
@@ -261,18 +258,12 @@ public void showShowTime() throws IOException, ParseException{
 	for(int i=0;i<al.size();i++){
 	ShowTime st=(ShowTime)al.get(i);
 	System.out.println("Showtime ID :" +(i+1));
-	System.out.println("Cineplex:" +st.getCineplexName());		
-	System.out.println("Hall Number: "+st.getCinemaId());		
-	System.out.println(st.getMovieTitle());
-	//format the date and time to dd-MM-yyyy and HH:mm format
-	System.out.println("Date: " + dayFormat.format(st.getDate()));
-	System.out.println("Time: " + timeFormat.format(st.getTime()));
-	System.out.println("---------------------------------------");		
+	st.display();
 	}	
 	}
 	
 
-public void createShowTime(int cineplexId,int cinemaId,int movieId,String strDate,String strTime) throws ParseException{
+public void createShowTime(int cineplexId,int cinemaId,int movieId,String strTime) throws ParseException{
 	try {
 	Scanner input = new Scanner(System.in);
 	ArrayList movieal=new ArrayList();
@@ -296,7 +287,7 @@ public void createShowTime(int cineplexId,int cinemaId,int movieId,String strDat
 	
 	StorageHandler sts=new ShowTimeStorage();
 	showtimeal=sts.readObject();
-	ShowTime st = new ShowTime(movieTitle,cineplex,cinemaId,strDate,strTime);	
+	ShowTime st = new ShowTime(movieTitle,cineplex,cinemaId,strTime);	
 	showtimeal.add(st);		
 	sts.saveObject("showtime.txt", showtimeal);		
 	}catch (IOException e) {
@@ -308,7 +299,6 @@ public void createShowTime(int cineplexId,int cinemaId,int movieId,String strDat
 public void EditShowTime(int showTimeId) throws ParseException{
 	ShowTimeStorage sts= new ShowTimeStorage();
 	ArrayList al=new ArrayList();
-	SimpleDateFormat dayFormat = new SimpleDateFormat("dd-MM-yyyy");
 	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 	String strchoice="";
 
@@ -322,11 +312,7 @@ public void EditShowTime(int showTimeId) throws ParseException{
 		
 		//get the ShowTime user wants to edit
 		ShowTime st=(ShowTime)al.get(showTimeId-1);
-		System.out.println("1) Cineplex : " + st.getCineplexName());
-		System.out.println("2) Hall Number : " + st.getCinemaId());
-		System.out.println("3) " + st.getMovieTitle());
-		System.out.println("4) Date : " + dayFormat.format(st.getDate()));
-		System.out.println("5) Time : " + timeFormat.format(st.getTime()));
+		st.display();
 		System.out.println("Enter the field you wish to edit :");
 		int choice=input.nextInt();
 		input.nextLine();
@@ -385,15 +371,7 @@ public void EditShowTime(int showTimeId) throws ParseException{
 			System.out.println("Movie changed!");
 			break;
 			
-		case 4:			
-			System.out.println("Enter new date in dd-mm-yyyy");
-			String inputDate=input.nextLine();
-			Date date = (Date)dayFormat.parse(inputDate);
-			st.setDate(inputDate);
-			System.out.println("Date changed!");
-			break;
-
-		case 5:
+		case 4:
 			System.out.println("Enter new time in hh:mm");
 			String inputTime=input.nextLine();
 			Date time = (Date)timeFormat.parse(inputTime);
@@ -433,6 +411,203 @@ public void DeleteShowTime(int showTimeId) throws ParseException{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 }
+public void ShowNormalPrice(){
+	SystemStorage ss = new SystemStorage();
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = ss.readPrice("NormalPrice.txt") ;
+		
+		for (int i = 0 ; i < al.size() ; i++) {
+				Price p = (Price)al.get(i);
+				System.out.println(p.getPriceType()+": "+p.getPrice());
+		}
+		
+		
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void Show3DPrice(){
+	SystemStorage ss = new SystemStorage();
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = ss.readPrice("3DPrice.txt") ;
+		
+		for (int i = 0 ; i < al.size() ; i++) {
+				Price p = (Price)al.get(i);
+				System.out.println(p.getPriceType()+": "+p.getPrice());
+				
+		}
+		
+		
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void ShowPriceAttribute(int tickettype){
+	SystemStorage ss = new SystemStorage();
+	try {
+		ArrayList al=new ArrayList();
+		ArrayList al2=new ArrayList();
+		// read file containing Professor records.
+		al = ss.readPrice("NormalPrice.txt") ;
+		al2 =ss.readPrice("3DPrice.txt") ;
+		if(tickettype==1){
+			for (int i = 0 ; i < al.size() ; i++) {
+				Price p = (Price)al.get(i);
+				System.out.println(i+1+") "+p.getPriceType());
+				
+		}
+		}
+		if(tickettype==2){
+			for (int i = 0 ; i < al.size() ; i++) {
+				Price p = (Price)al2.get(i);
+				System.out.println(i+1+") "+p.getPriceType());		
+		}
+		}
+		
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void UpdateNormalPrice(int attribute){
+	SystemStorage ss = new SystemStorage();
+	Scanner input = new Scanner(System.in);
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = ss.readPrice("NormalPrice.txt");
+		String ty=null, pr=null;
+        double price=0;
+		for (int i = 0 ; i < al.size() ; i++) {
+				Price p = (Price)al.get(attribute-1);
+				ty=p.getPriceType();
+				pr=String.valueOf(p.getPrice());
+				
+				System.out.println("Enter New Price: ");
+				String newprice=input.nextLine();
+				pr=pr.replace(pr, newprice);
+				
+			    price=Double.parseDouble(pr);
+				
+				break;
+			
+		}
+		al.remove(attribute-1);
+		Price newPrice=new Price(ty,price);
+		al.add(attribute-1, newPrice);
+		
+		// write Professor record/s to file.
+		ss.saveupdatedPrice("NormalPrice.txt", al);
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void Update3DPrice(int attribute){
+	SystemStorage ss = new SystemStorage();
+	Scanner input = new Scanner(System.in);
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = ss.readPrice("3DPrice.txt");
+		String ty=null, pr=null;
+        double price=0;
+		for (int i = 0 ; i < al.size() ; i++) {
+				Price p = (Price)al.get(attribute-1);
+				ty=p.getPriceType();
+				pr=String.valueOf(p.getPrice());
+				
+				System.out.println("Enter New Price: ");
+				String newprice=input.nextLine();
+				pr=pr.replace(pr, newprice);
+				
+			    price=Double.parseDouble(pr);
+				
+				break;
+			
+		}
+		al.remove(attribute-1);
+		Price newPrice=new Price(ty,price);
+		al.add(attribute-1, newPrice);
+		
+		// write Professor record/s to file.
+		ss.saveupdatedPrice("3DPrice.txt", al);
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void CreateHoliday(String HolidayName,String HolidayDate ){
+	SystemStorage ss = new SystemStorage();
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = ss.readHoliday("Holiday.txt") ;
+		int HolidayId=(al.size())+1;
+		for (int i = 0 ; i < al.size() ; i++) {
+				Date d1 = (Date)al.get(i);
+				
+		}
+		
+		Holiday h= new Holiday(HolidayId,HolidayName,HolidayDate);
+		// al is an array list containing Professor objs
+		al.add(h);
+		
+		// write Professor record/s to file.
+		ss.saveupdatedHoliday("Holiday.txt", al);
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void ShowHoliday(){
+	SystemStorage ss = new SystemStorage();
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = ss.readHoliday("Holiday.txt") ;
+		for (int i = 0 ; i < al.size() ; i++) {
+				Holiday h = (Holiday)al.get(i);
+				System.out.println(h.getHolidayId()+"       "+ h.getHolidayName()+"       "+h.getHolidayDate());				    	
+			
+		}
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
+public void RemoveHoliday(int holidayid){
+	SystemStorage ss = new SystemStorage();
+	Scanner input = new Scanner(System.in);
+	try {
+		ArrayList al=new ArrayList();
+		// read file containing Professor records.
+		al = ss.readHoliday("Holiday.txt") ;
+		int id=0;
+		String hn=null,hd=null;
+
+		for (int i = 0 ; i < al.size() ; i++) {
+				Holiday h = (Holiday)al.get(holidayid-1);
+				id=h.getHolidayId();
+				hn=h.getHolidayName();
+				hd=h.getHolidayDate();
+				break;
+			
+		}
+		al.remove(holidayid-1);
+		
+		// write Professor record/s to file.
+		ss.saveupdatedHoliday("Holiday.txt", al);
+	}catch (IOException e) {
+		System.out.println("IOException > " + e.getMessage());
+	}
+}
+
 }
