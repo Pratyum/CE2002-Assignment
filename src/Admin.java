@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-public class User {
+public class Admin {
 private String username;
 private String password;
 private String Movietitle ;
@@ -17,10 +17,10 @@ private String Synopsis ;
 private String Director ;
 private String Cast;
 
-public User(){
+public Admin(){
 	
 }
-public User(String user, String pass){
+public Admin(String user, String pass){
     username = user;
     password = pass;
 }
@@ -52,6 +52,9 @@ public void CreateMovie(String movietitle,String type,String rating,int status,S
 		}
 		else if(status==2){
 			strStatus="Now Showing";			
+		}
+		else if(status==3){
+			strStatus="Preview";
 		}
 		
 		
@@ -89,7 +92,7 @@ public void ShowMovie(int choice) throws ParseException{
 			}		
 		}
 		//show coming soon movies
-		else if(choice==2){
+		else if(choice==3){
 			for (int i = 0 ; i < al.size() ; i++) {
 					Movie m = (Movie)al.get(i);
 					if(m.getStatus().compareTo("Coming Soon")==0)
@@ -97,8 +100,16 @@ public void ShowMovie(int choice) throws ParseException{
 					
 				}		
 			}
+		else if(choice==4){
+			for (int i = 0 ; i < al.size() ; i++) {
+					Movie m = (Movie)al.get(i);
+					if(m.getStatus().compareTo("Preview")==0)
+					System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle());
+					
+				}		
+			}
 		//show all movies
-		else if(choice==3){
+		else if(choice==5){
 		for (int i = 0 ; i < al.size() ; i++) {
 				Movie m = (Movie)al.get(i);
 				System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle()+"  Status:"+m.getStatus());
@@ -221,8 +232,6 @@ public void RemoveMovie(int moviechoice){
 		al = ms.readObject();
 		int id=0;
 		String mo=null,ty=null,ra=null,st=null,sy=null,di=null,ca= null,dur=null;
-
-		for (int i = 0 ; i < al.size() ; i++) {
 				Movie m = (Movie)al.get(moviechoice-1);
 				id=m.getMovieId();
 				mo=m.getMovietitle();
@@ -234,12 +243,14 @@ public void RemoveMovie(int moviechoice){
 				ca=m.getCast();
 				dur=m.getDuration();
 				st=st.replace(st, "End of Showing");
-				break;
-			
-		}
-		al.remove(moviechoice-1);
 		Movie newmovie=new Movie(id,mo,ty,ra,st,sy,di,ca,dur);
-		al.add(moviechoice-1, newmovie);
+		try {
+			DeleteShowTime(mo);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		al.set(moviechoice-1, newmovie);
 		
 		// write Movie record/s to file.
 		ms.saveupdatedMovie("movie.txt", al);
@@ -412,6 +423,28 @@ public void DeleteShowTime(int showTimeId) throws ParseException{
 			e.printStackTrace();
 		}
 }
+
+public void DeleteShowTime(String MovieTitle) throws ParseException{
+	ShowTimeStorage sts= new ShowTimeStorage();
+	ArrayList al=new ArrayList();
+	String strchoice="";
+	try {
+		al = sts.readObject() ;
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	for(int i=0;i<al.size();++i){
+		if(((ShowTime)al.get(i)).getMovieTitle().equals(MovieTitle)){
+			al.remove(i);
+		}
+	}
+		try {
+			sts.saveObject("showtime.txt", al);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+}
+
 public void ShowNormalPrice(){
 	SystemStorage ss = new SystemStorage();
 	try {

@@ -5,12 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 public class UserLogin {
-	public User check=null;
+	public Admin check=null;
 	private String username;
 	private String password;
 	private ArrayList<Movie> ListOfMovies;
@@ -69,8 +70,7 @@ public class UserLogin {
 	    System.out.println("====Menu====");
 	    System.out.println("1.Staff");
 	    System.out.println("2.Customer");
-	    System.out.println("3.View All Movies with Information");
-	    System.out.println("4.Exit");
+	    System.out.println("3.Exit");
 	}
 	private void printAdminMainOptions(){
 		System.out.println("==============WELCOME ADMIN===============");
@@ -93,8 +93,9 @@ public class UserLogin {
 			System.out.println("Enter status:");
 			System.out.println("1) Coming Soon");
 			System.out.println("2) Showing Now");
+			System.out.println("3) Preview");
 		    status=input.nextInt();
-		    if(status!=1 &&status!=2){
+		    if(status!=1 &&status!=2 && status!=3){
 		    	System.out.println("Please enter a value input!");
 				return false;
 		    }
@@ -129,7 +130,9 @@ public class UserLogin {
 		System.out.println();
 		System.out.println("1.Show movies showing now");
 		System.out.println("2.Show archived movies");
-		System.out.println("3.Show all movies");								
+		System.out.println("3.Show coming soon movies");
+		System.out.println("4.Show preview soon movies");
+		System.out.println("5.Show all movies");								
 		choice= input.nextInt();				
         try {
 			check.ShowMovie(choice);
@@ -142,16 +145,18 @@ public class UserLogin {
 		if (choice==0)
 			return;
 		check.ChooseEditMovie(choice);					
-	    System.out.println("Choose category to edit:");			    
+	    System.out.println("Choose category to edit or 0 to go back:");			    
 	    int category=input.nextInt();
-	    input.nextLine();
-	    check.UpdateMovie(category, choice);
+	    if(category!=0)
+	    	check.UpdateMovie(category, choice);
 	}
 	private void removeMovie(){
 		int codeToRemove;
 		System.out.println();
 		try {
+			check.ShowMovie(1);
 			check.ShowMovie(3);
+			check.ShowMovie(4);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -162,7 +167,6 @@ public class UserLogin {
 		if(codeToRemove!=0)
 			check.RemoveMovie(codeToRemove);
 	}
-	
 	private void createShowTime(){
 		  System.out.println();
 		  System.out.println("All current showtime");
@@ -185,7 +189,7 @@ public class UserLogin {
 			input.nextLine();
 			if(cineplexId==0)
 				return;
-			System.out.println("Enter cinema ID: ");
+			System.out.println("Enter Screen No: ");
 			int cinemaId=input.nextInt();
 			input.nextLine();					
 			//show movies showing now
@@ -400,6 +404,7 @@ public class UserLogin {
 				}
 			}
 			Ticket ticket = new Ticket(TransID,movie.getType(), "Platinum", String.valueOf(rowNo).concat(String.valueOf(seatno)),showTime.getStrDate() , showTime.getStrTime(), showTime.getCineplexName(), showTime.getMovieTitle(), isStudent, isElder);
+			ticket.setScreenNo(screen.getScreenNo());
 			System.out.println("Seat Assigned!");
 			ListOfTickets.add(ticket);
 		}else{
@@ -568,6 +573,64 @@ public class UserLogin {
 		  }
 	}
 	
+	private void searchMovie(String movieSearch){
+		boolean flag =true;
+	for(int i=0;i<ListOfMovies.size();++i){
+		if(ListOfMovies.get(i).getMovietitle().contains(movieSearch)){
+			flag = false;
+			ListOfMovies.get(i).display();
+		}
+	}
+	if(flag){
+		System.out.println("Sorry! Such a movie name does not exist.");
+	}
+	System.out.println();
+	}
+	private void listTopFiveSales(){
+		ArrayList<Movie> MoviesArray= new ArrayList<>();
+		for(int i=0;i<ListOfMovies.size();++i){
+			if(ListOfMovies.get(i).getStatus().equals("Now Showing")){
+				MoviesArray.add(ListOfMovies.get(i));
+			}
+		}
+		for(int i=0;i<MoviesArray.size();++i){
+			for(int j=i+1;j<MoviesArray.size();++j){
+				if(MoviesArray.get(i).getTicketSales() < MoviesArray.get(j).getTicketSales()){
+					Movie temp = MoviesArray.get(i);
+					MoviesArray.set(i, MoviesArray.get(j));
+					MoviesArray.set(j,temp);
+				}
+			}
+		}
+		for(int i=0;i<MoviesArray.size()&&i<5;++i){
+			System.out.println(i+1+") Movie Name: "+ MoviesArray.get(i).getMovietitle() +"\t Sales: "+MoviesArray.get(i).getTicketSales());
+		}
+		System.out.println();
+	}
+	private void listTopFiveRating(){
+		ArrayList<Movie> MoviesArray= new ArrayList<>();
+		for(int i=0;i<ListOfMovies.size();++i){
+			if(ListOfMovies.get(i).getStatus().equals("Now Showing")){
+				MoviesArray.add(ListOfMovies.get(i));
+			}
+		}
+		for(int i=0;i<MoviesArray.size();++i){
+			for(int j=i+1;j<MoviesArray.size();++j){
+				if(MoviesArray.get(i).getAvgRating()<MoviesArray.get(j).getAvgRating()){
+					Movie temp = MoviesArray.get(i);
+					MoviesArray.set(i, MoviesArray.get(j));
+					MoviesArray.set(j,temp);
+				}
+			}
+		}
+		for(int i=0;i<MoviesArray.size()&&i<5;++i){
+			System.out.println(i+1+") Movie Name: "+ MoviesArray.get(i).getMovietitle() +"\t Rating: "+MoviesArray.get(i).getAvgRating());
+		}
+		System.out.println();
+		
+	}
+
+	
 	public void Login() throws ParseException {
 		Scanner input = new Scanner(System.in);
 		String filename = "admin1.txt" ;
@@ -589,7 +652,7 @@ public class UserLogin {
 		      	    username = input.next();
 		      	    System.out.println("Password: ");
 		      	    password = input.next();
-		      	    check = new User(username, password);
+		      	    check = new Admin(username, password);
 		      	    if (check.auth()!=true)
 		      	    		System.out.println("Please enter a valid id/password");
 		      	   
@@ -698,7 +761,7 @@ public class UserLogin {
 					case 1:
 						do
 						{
-							User p=new User();
+							Admin p=new Admin();
 							System.out.println("====Current Ticket Price====");
 							System.out.println("1) Normal Price");
 							System.out.println("============================");
@@ -724,7 +787,7 @@ public class UserLogin {
 								input.nextLine();
 								p.UpdateNormalPrice(ticketattribute);
 								System.out.println("Ticket Price Updated");
-							}	
+							}		
 							if(tickettype==2)
 							{
 								System.out.println("3D Price");
@@ -744,7 +807,7 @@ public class UserLogin {
 						int holidaychoice;
 						do
 						{
-							User holiday=new User();
+							Admin holiday=new Admin();
 							System.out.println("Current List of Holiday:");
 							System.out.println("ID      Name           Date");
 							System.out.println("===========================");
@@ -764,12 +827,12 @@ public class UserLogin {
 								String holidaydate=input.nextLine();
 								System.out.println("Please enter Holiday Name:");
 								String holidayname=input.nextLine();
-								User d=new User();
+								Admin d=new Admin();
 								d.CreateHoliday(holidayname, holidaydate);
 								System.out.println("Holiday Created!");
 								break;
 							case 2:
-								User rh=new User();
+								Admin rh=new Admin();
 								System.out.println("Current List of Holiday:");
 								System.out.println("ID      Name           Date");
 								System.out.println("===========================");
@@ -812,7 +875,11 @@ public class UserLogin {
 			  System.out.println("Pleas enter your choice");
 			  System.out.println("1) Make a booking");
 			  System.out.println("2) View history");
-			  System.out.println("3) Rate and Review a Movie");
+			  System.out.println("3) List top 5 Movies by ticket sales");
+			  System.out.println("4) List top 5 Movies by Rating");
+			  System.out.println("5) Search/List Movies");
+			  System.out.println("6) View all Movies with information");
+			  System.out.println("7) Rate and Review a Movie");
 			  System.out.println("0) Exit");
 			  custOption=input.nextInt();
 			  if(custOption==0){
@@ -857,6 +924,7 @@ public class UserLogin {
 					System.out.println("Please Choose your Seats ");
 					int screenNo = showTime.getCinemaId();
 					Screen screen = chooseScreen(screenNo,showDate);
+					System.out.println("No of free seats: "+screen.getSeatsFree());
 					System.out.println("Enter the No of Tickets: ");
 					int noOfTickets = input.nextInt();
 					
@@ -876,7 +944,39 @@ public class UserLogin {
 					  checkBooking(phoneNo);
 				  }while(phoneNo!=0);
 			  }
-			  else if (custOption==3){
+			  else if( custOption==3){
+				  listTopFiveSales();
+			  }
+			  else if( custOption==4){
+				  listTopFiveRating();
+			  }
+			  else if( custOption==5){
+				  String movieSearch;
+				  System.out.println("------------Search Movies--------------");
+				  input.nextLine();
+				  do{
+				  System.out.println("Enter the name of the Movie to Search or 0 to exit: ");
+				  movieSearch = input.nextLine();
+				  searchMovie(movieSearch);
+				  }while(!movieSearch.equals("0"));
+			  }
+			  else if( custOption==6){
+					int movieID,choice61=1;
+					do{
+					displayDetailMovie();
+					System.out.println("Enter the Movie ID for Seeing thier Reviews or 0 to go back!");
+					movieID = input.nextInt();
+					if(movieID!=0){
+					do{
+					displayReview(movieID);
+					System.out.println("Press 0 to go back!");
+					choice61 = input.nextInt();
+					}while(choice61!=0);
+					}
+					}while(movieID!=0);
+					break;
+			  }
+			  else if (custOption==7){
 				//Display All Movies
 				Movie movie = chooseMovie();
 				System.out.println("Enter Rating for Movie(1-5)");
@@ -893,21 +993,6 @@ public class UserLogin {
 			  }while(custOption!=0);
 			break;
 		case 3:
-			int movieID,choice31=1;
-			do{
-			displayDetailMovie();
-			System.out.println("Enter the Movie ID for Seeing thier Reviews or 0 to go back!");
-			movieID = input.nextInt();
-			if(movieID!=0){
-			do{
-			displayReview(movieID);
-			System.out.println("Press 0 to go back!");
-			choice31 = input.nextInt();
-			}while(choice31!=0);
-			}
-			}while(movieID!=0);
-			break;
-		case 4:
 			System.out.println("Program terminating...");
 			System.exit(0);
 			break;

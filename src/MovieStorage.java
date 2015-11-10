@@ -26,7 +26,9 @@ public class MovieStorage extends StorageHandler{
 				String  director = star.nextToken().trim();	
 				String  cast = star.nextToken().trim();	
 				String duration = star.nextToken().trim();
+				int ticketSales = Integer.parseInt(star.nextToken().trim());
 				Movie m = new Movie(movieId,movietitle,type,rating,status,synopsis,director,cast,duration);
+				m.setTicketSales(ticketSales);
 				alr.add(m) ;
                 }
 			}
@@ -99,7 +101,8 @@ public class MovieStorage extends StorageHandler{
 	  					st.append(SEPARATOR1);
 	  					st.append(m.getDuration().trim());
 	  					st.append(SEPARATOR1);
-	  				
+	  					st.append(String.valueOf(m.getTicketSales()).trim());
+	  					st.append(SEPARATOR1);
 	  				alw.add(st.toString()) ;
 	  			}
 	          	if(reviews.size()!=0){
@@ -150,6 +153,8 @@ public class MovieStorage extends StorageHandler{
 						st.append(m.getCast().trim());
 						st.append(SEPARATOR1);
 						st.append(m.getDuration().trim());
+	  					st.append(SEPARATOR1);
+	  					st.append(String.valueOf(m.getTicketSales()).trim());
 	  					st.append(SEPARATOR1);
 	  					if(m.getReviews()!=null){
 	  					if(m.getReviews().size()!=0){

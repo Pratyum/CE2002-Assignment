@@ -78,6 +78,7 @@ public class Movie implements Serializable,DisplayInterface {
 	public void setDirector(String Director) { this.director=Director; }
 	public void setCast(String Cast) { this.cast=Cast; }
 	public void setRating(String rating) {this.rating = rating;}
+	public void setTicketSales(int TicketSales){this.ticketSales = TicketSales;}
 	public void incTicketSales(int tickets){this.ticketSales +=tickets;}
 	public void setReview(ArrayList<Review> Review){ 
 		review = Review;

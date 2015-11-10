@@ -30,7 +30,9 @@ public class TicketStorage extends StorageHandler{
 				String cineplex = star.nextToken().trim();
 				String movie = star.nextToken().trim();
 				double price=Double.parseDouble(star.nextToken().trim());
+				int screenNo = Integer.parseInt(star.nextToken().trim());
 				Ticket t=new Ticket(TID,type,screenClass,seat,date,time,cineplex,movie,price);
+				t.setScreenNo(screenNo);
 				alr.add(t);
 			}
 			return alr ;
@@ -77,6 +79,8 @@ public class TicketStorage extends StorageHandler{
 				st.append(ticket.getMovie());
 				st.append(SEPARATOR);
 				st.append(ticket.getPrice());
+				st.append(SEPARATOR);
+				st.append(ticket.getscreenNo());
 				st.append(SEPARATOR);
 				alw.add(st.toString()) ;
 		}

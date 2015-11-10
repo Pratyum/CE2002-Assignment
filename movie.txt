@@ -1,4 +1,7 @@
-1|Spectre|2D|3.0|Now Showing|James Bond!|I just wanna know|Daniel Criag|150|
-2|Hunger Games|3D|U|End of Showing|This is a test|I really dont care at all|Jennifer someone|112|
-3|Star Wars|3D|3.0|Now Showing|Test|XYZ|jedi|120|
-4|Hinger Games'|3D|pg13|Now Showing|shit movie|your mom|jlaw|1000|
+1|Spectre|2D|3.0|Now Showing|James Bond!|I just wanna know|Daniel Criag|150|5|
+2|Hunger Games|3D|U|End of Showing|This is a test|I really dont care at all|Jennifer someone|112|10|
+3|Star Wars|3D|PG13|End of Showing|Test|XYZ|jedi|120|0|
+4|Hinger Games'|3D|pg13|Now Showing|shit movie|your mom|jlaw|1000|14|
+5|Dragons|2D|PG13|End of Showing|This a movie about dragons.|I dont care|I dont know|130|0|
+6|TestMovie01|3D|PG13|End of Showing|This is a test to check remove|Testdir|TestCast|130|0|
+7|TestMovie02|3d|R|End of Showing|Test|testdr|testcasts|90|0|
