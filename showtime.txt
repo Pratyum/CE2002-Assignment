@@ -1,3 +1,3 @@
-Spectre|GV Jurong Point|4|null|21:20|
-Hinger Games'|GV Suntec City|3|null|30:50|
-TestMovie01|GV Jurong Point|3|null|12:30|
+Spectre|BZ Jurong Point|4|null|21:20|
+Hinger Games'|BZ Suntec City|3|null|30:50|
+TestMovie01|BZ Jurong Point|3|null|12:30|

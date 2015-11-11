@@ -6,13 +6,22 @@ import java.util.StringTokenizer;
 
 
 public class SystemStorage extends StorageHandler{
+//------------------------------------------------------Data Members
 	public static final String SEPARATOR1 = "|";
 	public static final String SEPARATOR2 = ":";
-	// an example of reading
-		public ArrayList readPrice(String filename) throws IOException {
+	
+//-------------------------------------------------------Member Functions
+	
+/**
+ * Function to read all the prices from the file
+ * @param filename the name of the file to read from
+ * @return List of Prices for the different days
+ * @throws IOException since the errors need to be on the top level
+ */
+		public ArrayList<Price> readPrice(String filename) throws IOException {
 			// read String from text file
-			ArrayList stringArray = (ArrayList)read(filename);
-			ArrayList alr = new ArrayList() ;// to store Professors data
+			ArrayList<String> stringArray = read(filename);
+			ArrayList<Price> alr = new ArrayList<>() ;// to store Price data
 
 	        for (int i = 0 ; i < stringArray.size() ; i++) {
 					String st = (String)stringArray.get(i);
@@ -22,9 +31,9 @@ public class SystemStorage extends StorageHandler{
 					String  pricetype = star.nextToken().trim();	// first token
 					double  price = Double.parseDouble(star.nextToken().trim());	// second token
 					
-					// create Professor object from file data
+					// create Price object from file data
 					Price p=new Price(pricetype,price);
-					// add to Professors list
+					// add to Price list
 					alr.add(p) ;
 	                }
 				}
@@ -34,9 +43,14 @@ public class SystemStorage extends StorageHandler{
 		
 		}
 		
-		// an example of saving
+/**
+ * Function to save the updated values to the file
+ * @param filename the file to save into
+ * @param al List of prices to write
+ * @throws IOException since the errors need to be on the top level
+ */
 		  public void saveupdatedPrice(String filename, List al) throws IOException {
-		  		List alw = new ArrayList() ;// to store Professors data
+		  		ArrayList<String> alw = new ArrayList<>() ;
 
 		          for (int i = 0 ; i < al.size() ; i++) {
 		  				Price p = (Price)al.get(i);
@@ -51,75 +65,67 @@ public class SystemStorage extends StorageHandler{
 		  			}
 		  			write(filename,alw);
 		  	}
-		  
-		  // an example of reading
-			public ArrayList readHoliday(String filename) throws IOException {
-				// read String from text file
-				ArrayList stringArray = (ArrayList)read(filename);
-				ArrayList alr = new ArrayList() ;// to store Professors data
+ /**
+  * Function to read the list of user defined holidays
+  * @param filename the file name to read from 
+  * @return List of holidays that need to be checked
+  * @throws IOException since the errors need to be on the top level
+  */
+		public ArrayList<Holiday> readHoliday(String filename) throws IOException {
+			// read String from text file
+			ArrayList<String> stringArray = read(filename);
+			ArrayList<Holiday> alr = new ArrayList<>() ;
 
-		        for (int i = 0 ; i < stringArray.size() ; i++) {
-						String st = (String)stringArray.get(i);
-						// get individual 'fields' of the string separated by SEPARATOR
-						StringTokenizer star = new StringTokenizer(st , SEPARATOR1);	// pass in the string to the string tokenizer using delimiter ","
-		                while(star.hasMoreTokens()){
-		                int HolidayId=Integer.parseInt(star.nextToken().trim());//first token
-						String  HolidayName = star.nextToken().trim();	// second token
-						String  HolidayDate = star.nextToken().trim();	// third token
+	        for (int i = 0 ; i < stringArray.size() ; i++) {
+					String st = (String)stringArray.get(i);
+					// get individual 'fields' of the string separated by SEPARATOR
+					StringTokenizer star = new StringTokenizer(st , SEPARATOR1);	// pass in the string to the string tokenizer using delimiter "|"
+	                while(star.hasMoreTokens()){
+	                int HolidayId=Integer.parseInt(star.nextToken().trim());//first token
+					String  HolidayName = star.nextToken().trim();	// second token
+					String  HolidayDate = star.nextToken().trim();	// third token
 
-						// create Professor object from file data
-						Holiday h=new Holiday(HolidayId,HolidayName,HolidayDate);
-						// add to Professors list
-						alr.add(h) ;
-		                }
-					}
-				
-				
-					return alr ;
+					
+					Holiday h=new Holiday(HolidayId,HolidayName,HolidayDate);
+					
+					alr.add(h) ;
+	                }
+				}
 			
-			}
 			
-			// an example of saving
-			  public void saveupdatedHoliday(String filename, List al) throws IOException {
-			  		List alw = new ArrayList() ;// to store Professors data
+				return alr ;
+		
+		}
+			
+	/**
+	 * Function to update the List of Holidays into the file
+	 * @param filename Name of the file to write into 
+	 * @param al List of Holidays defined by the user
+	 * @throws IOException since the errors need to be on the top level
+	 */
+	  public void saveupdatedHoliday(String filename, List al) throws IOException {
+	  		ArrayList<String> alw = new ArrayList<>() ;// to store Professors data
 
-			          for (int i = 0 ; i < al.size() ; i++) {
-			  				Holiday h = (Holiday)al.get(i);
-			  				StringBuilder st =  new StringBuilder() ;
-			  						  			
-			  				st.append(h.getHolidayId());
-							st.append(SEPARATOR1);
-							st.append(h.getHolidayName());
-							st.append(SEPARATOR1);
-							st.append(h.getHolidayDate());
-			  				
-			  				
-			  				alw.add(st.toString()) ;
-			  			}
-			  			write(filename,alw);
-			  	}
-
-			@Override
-			public ArrayList readObject() throws IOException, ParseException {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public void saveFile() {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void print(ArrayList a) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void saveObject(String filename, List al) throws IOException {
-				// TODO Auto-generated method stub
-				
-			}
+	          for (int i = 0 ; i < al.size() ; i++) {
+	  				Holiday h = (Holiday)al.get(i);
+	  				StringBuilder st =  new StringBuilder() ;
+	  						  			
+	  				st.append(h.getHolidayId());
+					st.append(SEPARATOR1);
+					st.append(h.getHolidayName());
+					st.append(SEPARATOR1);
+					st.append(h.getHolidayDate());
+	  				
+	  				
+	  				alw.add(st.toString()) ;
+	  			}
+	  			write(filename,alw);
+	  	}
+//--------------------------------------------------------------------------Methods to Implement
+// These are not being used since we combine both holiday 
+// and price in one class, hence require different functions for each.
+	public ArrayList readObject() throws IOException, ParseException {return null;}
+	public void saveFile() {}
+	public void print(ArrayList a) {}
+	public void saveObject(String filename, List al) throws IOException {}
 }

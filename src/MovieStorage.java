@@ -71,7 +71,7 @@ public class MovieStorage extends StorageHandler{
 	}
 	
 	public void saveupdatedMovie(String filename, List al) throws IOException {
-	  		List alw = new ArrayList() ;
+	  		ArrayList<String> alw = new ArrayList<>() ;
 	  		ArrayList<Review> reviews = new ArrayList<>();
 	          for (int i = 0 ; i < al.size() ; i++) {
 	  				Movie m = (Movie)al.get(i);

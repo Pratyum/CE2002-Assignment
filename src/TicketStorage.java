@@ -1,21 +1,23 @@
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.text.ParseException;
-import java.io.FileInputStream;
-import java.time.LocalDateTime;
-import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class TicketStorage extends StorageHandler{
+//----------------------------------------------------------Data Members
 	public static final String SEPARATOR = "|";
-	public ArrayList readObject() throws IOException,ParseException {
+//----------------------------------------------------------Member Functions
+	/**
+	 * Function to Read List of Tickets from a file
+	 * @return List of all tickets in the file
+	 * @throws IOException since the errors must be handled only at the top level
+	 * @throws ParseException since the errors must be handled only at the top level
+	 */
+	public ArrayList<Ticket> readObject() throws IOException,ParseException {
 		// read String from text file
-		ArrayList stringArray = (ArrayList)read("ticket.txt");
-		ArrayList<Ticket> alr = new ArrayList();
+		ArrayList<String> stringArray = read("ticket.txt");
+		ArrayList<Ticket> alr = new ArrayList<>();
 
         for (int i = 0 ; i <stringArray.size() ; i++) {
 				String st = (String)stringArray.get(i);
@@ -37,31 +39,16 @@ public class TicketStorage extends StorageHandler{
 			}
 			return alr ;
 	}
-	
-
-
-
-
-	@Override
-	public void saveFile() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void print(ArrayList a) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
+	/**
+	 * Function to  Write the List of tickets to the file
+	 * @param filename Filename to write to 
+	 * @param al List of Tickets to be written
+	 */
 	public void saveObject(String filename, List al) throws IOException {
-		// TODO Auto-generated method stub
-		List alw = new ArrayList() ;
+		ArrayList<String> alw = new ArrayList<>() ;
 		for (int i = 0 ; i < al.size() ; i++) {
 			Ticket ticket= (Ticket)al.get(i);
 			StringBuilder st =  new StringBuilder() ;
-			//if(i==al.size()-1){
 				st.append(ticket.getTransactionID());
 				st.append(SEPARATOR);
 				st.append(ticket.getType());
@@ -87,6 +74,9 @@ public class TicketStorage extends StorageHandler{
 		write(filename,alw);
 	}
 
+//--------------------------------------------------------------------Unimplemented Methods
+	public void saveFile() {}
+	public void print(ArrayList a) {}
 	
 	
 }

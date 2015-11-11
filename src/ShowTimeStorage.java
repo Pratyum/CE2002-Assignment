@@ -1,25 +1,27 @@
 import java.io.IOException;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.io.FileInputStream;
-import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.StringTokenizer;
 
-
-
 public class ShowTimeStorage extends StorageHandler{
+//----------------------------------------------------------------Data Members
 public static final String SEPARATOR = "|";
 SimpleDateFormat dayFormat = new SimpleDateFormat("dd-MM-yyyy");
 SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
-public ArrayList readObject(String cineplex) throws IOException, ParseException {
-	ArrayList stringArray = (ArrayList)read("showtime.txt");
-	ArrayList alr = new ArrayList() ;
+//---------------------------------------------------------------Member Functions
+/**
+ * Function to read the list of Showtimes in a particular cineplex
+ * @param cineplex the cineplex to search from.
+ * @return List of ShowTimes in that cinpelex for all movies.
+ * @throws IOException since the errors need to be on the top level
+ * @throws ParseException since the errors need to be on the top level
+ */
+public ArrayList<ShowTime> readObject(String cineplex) throws IOException, ParseException {
+	ArrayList<String> stringArray = read("showtime.txt");
+	ArrayList<ShowTime> alr = new ArrayList<>() ;
 	
 
 	
@@ -41,10 +43,12 @@ public ArrayList readObject(String cineplex) throws IOException, ParseException 
 }
 
 
-
-public ArrayList readObject() throws IOException, ParseException {
-	ArrayList stringArray = (ArrayList)read("showtime.txt");
-	ArrayList alr = new ArrayList() ;
+/**
+ * This is an overloaded function which returns all the Show Times in all the cineplexs
+ */
+public ArrayList<ShowTime> readObject() throws IOException, ParseException {
+	ArrayList<String> stringArray = read("showtime.txt");
+	ArrayList<ShowTime> alr = new ArrayList<>() ;
 
     for (int i = 0 ; i < stringArray.size() ; i++) {
 			String st = (String)stringArray.get(i);
@@ -61,27 +65,15 @@ public ArrayList readObject() throws IOException, ParseException {
 		}   
 		return alr ;
 }
-
-
-
-
-@Override
-public void saveFile() {
-	// TODO Auto-generated method stub
-	
-}
-
-@Override
-
-
-
+/**
+ * Function to Save the List of ShowTimes to the file.
+ */
 public void saveObject(String filename, List al) throws IOException {
-	List alw = new ArrayList() ;
+	ArrayList<String> alw = new ArrayList<>() ;
 
     for (int i = 0 ; i < al.size() ; i++) {
 			ShowTime showtime = (ShowTime)al.get(i);
 			StringBuilder st =  new StringBuilder() ;
-			//if(i==al.size()-1){
 				st.append(showtime.getMovieTitle());
 				st.append(SEPARATOR);
 				st.append(showtime.getCineplexName());
@@ -92,36 +84,14 @@ public void saveObject(String filename, List al) throws IOException {
 				st.append(SEPARATOR);
 				st.append(showtime.getStrTime());
 				st.append(SEPARATOR);
-				/*					}
-			else{
-				st.append(showtime.getMovieTitle());
-				st.append(SEPARATOR1);
-				st.append(showtime.getCineplexName());
-				st.append(SEPARATOR1);
-				st.append(showtime.getCinemaId());
-				st.append(SEPARATOR1);
-				st.append(showtime.getDate());
-				st.append(SEPARATOR1);
-				st.append(showtime.getTime());
-				st.append(SEPARATOR1);
-			}*/
 			alw.add(st.toString()) ;
 		}
 		write(filename,alw);
 }
-
+//------------------------------------------------------------------Unimplemented Methods
 @Override
-public void print(ArrayList a) {
-	// TODO Auto-generated method stub
-	
-}
-
-
-
-
-
-
-
-
+public void print(ArrayList a) {}
+@Override
+public void saveFile() {}	
 	
 }

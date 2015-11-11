@@ -11,17 +11,25 @@ import java.util.Scanner;
 import java.util.StringTokenizer; 
 
 public class Storage {
+	
+//--------------------------------------------------------------Data Members
 	private String readFile, writeFile, user, password;
 	public static final String SEPARATOR = " ";
 	public static final String SEPARATOR1 = "|";
 	
+//--------------------------------------------------------------Constructor
 	public Storage(String readFile, String writeFile, String user, String password) {
 		this.readFile = readFile;
 		this.writeFile = writeFile;
 		this.user=user;
 		this.password=password;
 	}
+//---------------------------------------------------------------Member Functions
 	
+	/**
+	 * Function to read the file and check if the user name and password are the same password.
+	 * @return true is same.
+	 */
 	public boolean readFile(){
 		boolean counter=false;
 			try {
@@ -45,6 +53,9 @@ public class Storage {
 	        }
 		 return counter;
 	}
+	/**
+	 * Function to write the new username and password.
+	 */
 	public void writeFile() {
         try {
             FileWriter writer = new FileWriter(writeFile, true);
@@ -56,13 +67,18 @@ public class Storage {
         }
  
     }
-	
+	/**
+	 * Function to read the attributes in the movie file.
+	 * @param filename the filename to read from
+	 * @return List of movies found in the movie files.
+	 * @throws IOException since finding an error must come on the top class.
+	 */
 
     // an example of reading
-	public static ArrayList readMovie(String filename) throws IOException {
+	public static ArrayList<Movie> readMovie(String filename) throws IOException {
 		// read String from text file
-		ArrayList stringArray = (ArrayList)read(filename);
-		ArrayList alr = new ArrayList() ;// to store Professors data
+		ArrayList<String> stringArray = (ArrayList)read(filename);
+		ArrayList<Movie> alr = new ArrayList<>() ;// to store Professors data
 
         for (int i = 0 ; i < stringArray.size() ; i++) {
 				String st = (String)stringArray.get(i);

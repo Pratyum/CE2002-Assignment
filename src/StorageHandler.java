@@ -12,9 +12,14 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public abstract class StorageHandler {
-	
-	  public static List read(String fileName) throws IOException {
-			List data = new ArrayList() ;
+/**
+ * Function to read the objects in the file	
+ * @param fileName file to read from
+ * @return The List of Objects read from the file
+ * @throws IOException since the errors need to be on the top level
+ */
+	  public static ArrayList<String> read(String fileName) throws IOException {
+			ArrayList<String> data = new ArrayList<>() ;
 		    Scanner scanner = new Scanner(new FileInputStream(fileName));
 		    try {
 		      while (scanner.hasNextLine()){
@@ -26,8 +31,13 @@ public abstract class StorageHandler {
 		    }
 		    return data;
 		  }
-	  
-	    public static void write(String fileName, List data) throws IOException  {
+	  /**
+	   * Function to write the list of objects to the file
+	   * @param fileName the file to write in
+	   * @param data List of data to write.
+	   * @throws IOException since the errors need to be on the top level
+	   */
+	    public static void write(String fileName, ArrayList<String> data) throws IOException  {
 	    PrintWriter out = new PrintWriter(new FileWriter(fileName));
 
 	    try {
@@ -39,33 +49,10 @@ public abstract class StorageHandler {
 	      out.close();
 	    }
 	  }
-	    public void Write(String fileName,List<String> lines) {
-			try {
-				File file = new File(fileName);
-
-				// if file doesnt exists, then create it
-				if (!file.exists()) {
-					file.createNewFile();
-				}
-
-				FileWriter fw = new FileWriter(file.getAbsoluteFile());
-				BufferedWriter bw = new BufferedWriter(fw);
-				for (String line : lines) {
-	                bw.write(line+"\n");
-	            }
-				bw.close();
-
-				System.out.println("Writing Done");
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
 	   
-	    
-	    public abstract ArrayList readObject() throws IOException, ParseException;
-	    public abstract void saveFile();
-	    public abstract void print(ArrayList a);
-	    public abstract void saveObject(String filename, List al) throws IOException;
+//----------------------------------------------------Methods to be implemented in their Inherited classes	    
+	  public abstract ArrayList readObject() throws IOException, ParseException;
+	  public abstract void saveFile();
+	  public abstract void print(ArrayList a);
+	  public abstract void saveObject(String filename, List al) throws IOException;
 }

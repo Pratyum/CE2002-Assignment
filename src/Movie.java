@@ -92,7 +92,6 @@ public class Movie implements Serializable,DisplayInterface {
 		}
 		review.add(custReview);
 		addRating(custReview.getReviewRating());
-		
 	} 
 	public void addRating(int rating){
 		this.totalRating += rating;

@@ -10,17 +10,29 @@ import java.util.Scanner;
 import java.util.StringTokenizer; 
 
 public class UserStorage extends StorageHandler{
+//--------------------------------------------------------Data Members
 	private String readFile, writeFile, user, password;
 	public static final String SEPARATOR = " ";
 	public static final String SEPARATOR1 = "|";
-	
+//---------------------------------------------------------Constructor
+	/**
+	 * Parameterized Constructor 
+	 * @param readFile File to read into
+	 * @param writeFile File to write into
+	 * @param user the username 
+	 * @param password the password
+	 */
 	public UserStorage(String readFile, String writeFile, String user, String password) {
 		this.readFile = readFile;
 		this.writeFile = writeFile;
 		this.user=user;
 		this.password=password;
 	}
-	
+//---------------------------------------------------------Member Functions
+	/**
+	 * Function to read the file and check if the user and password is same
+	 * @return true if both user name and password are same as in the file
+	 */
 	public boolean readFile(){
 		boolean counter=false;
 			try {
@@ -44,6 +56,10 @@ public class UserStorage extends StorageHandler{
 	        }
 		 return counter;
 	}
+	
+	/**
+	 * Function to write the new username and password into the file
+	 */
 	public void writeFile() {
         try {
             FileWriter writer = new FileWriter(writeFile, true);
@@ -56,27 +72,9 @@ public class UserStorage extends StorageHandler{
  
     }
 
-@Override
-public ArrayList readObject() throws IOException {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-@Override
-public void saveFile() {
-	// TODO Auto-generated method stub
-	
-}
-
-@Override
-public void print(ArrayList a) {
-	// TODO Auto-generated method stub
-	
-}
-
-@Override
-public void saveObject(String filename, List al) throws IOException {
-	// TODO Auto-generated method stub
-	
-}
+//------------------------------------------------------------------------------Unimplemented Methods
+public ArrayList readObject() throws IOException {return null;}
+public void saveFile() {}
+public void print(ArrayList a) {}
+public void saveObject(String filename, List al) throws IOException {}
 }
