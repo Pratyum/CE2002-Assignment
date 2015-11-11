@@ -75,45 +75,70 @@ public void ShowMovie(int choice) throws ParseException{
 		
 		//show current movies
 		if(choice==1){
-		for (int i = 0 ; i < al.size() ; i++) {
+			System.out.println("+------------MOVIES ON SHOW--------------+");
+			System.out.println("+----------------------------------------+");
+			System.out.printf("|%-8s| %-30s|\n","Movie ID","Name");
+			System.out.println("+----------------------------------------+");
+			for (int i = 0 ; i < al.size() ; i++) {
 				Movie m = (Movie)al.get(i);
-				if(m.getStatus().compareTo("Now Showing")==0){
-				System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle());}
-			}		
+				if(m.getStatus().compareTo("Now Showing")==0)
+				System.out.printf("|    %-4d| %-30s|\n",m.getMovieId(),m.getMovietitle());		
+			}
+			System.out.println("+----------------------------------------+");
 		}
 		
 		//show archived movies
 		else if(choice==2){
-		for (int i = 0 ; i < al.size() ; i++) {
+			System.out.println("+-------------MOVIES ARCHIVED------------+");
+			System.out.println("+----------------------------------------+");
+			System.out.printf("|%-8s| %-30s|\n","Movie ID","Name");
+			System.out.println("+----------------------------------------+");
+			for (int i = 0 ; i < al.size() ; i++) {
 				Movie m = (Movie)al.get(i);
 				if(m.getStatus().compareTo("End of Showing")==0)
-				System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle());
+					System.out.printf("|    %-4d| %-30s|\n",m.getMovieId(),m.getMovietitle());
 				
-			}		
+			}
+			System.out.println("+----------------------------------------+");
 		}
 		//show coming soon movies
 		else if(choice==3){
+			System.out.println("+-----------MOVIES COMING SOON-----------+");
+			System.out.println("+----------------------------------------+");
+			System.out.printf("|%-8s| %-30s|\n","Movie ID","Name");
+			System.out.println("+----------------------------------------+");
 			for (int i = 0 ; i < al.size() ; i++) {
 					Movie m = (Movie)al.get(i);
 					if(m.getStatus().compareTo("Coming Soon")==0)
-					System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle());
+						System.out.printf("|    %-4d| %-30s|\n",m.getMovieId(),m.getMovietitle());
 					
 				}		
-			}
+			System.out.println("+----------------------------------------+");
+		}
 		else if(choice==4){
+			System.out.println("+------------MOVIES ON PREVIEW-----------+");
+			System.out.println("+----------------------------------------+");
+			System.out.printf("|%-8s| %-30s|\n","Movie ID","Name");
+			System.out.println("+----------------------------------------+");
 			for (int i = 0 ; i < al.size() ; i++) {
 					Movie m = (Movie)al.get(i);
 					if(m.getStatus().compareTo("Preview")==0)
-					System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle());
+						System.out.printf("|    %-4d| %-30s|\n",m.getMovieId(),m.getMovietitle());
 					
-				}		
+				}
+			System.out.println("+----------------------------------------+");	
 			}
 		//show all movies
 		else if(choice==5){
-		for (int i = 0 ; i < al.size() ; i++) {
+			System.out.println("+-----------------------ALL MOVIES-----------------------+");
+			System.out.println("+--------------------------------------------------------+");
+			System.out.printf("|%-8s| %-30s|%-15s|\n","Movie ID","Name","Status");
+			System.out.println("+--------------------------------------------------------+");
+			for (int i = 0 ; i < al.size() ; i++) {
 				Movie m = (Movie)al.get(i);
-				System.out.println("Movie Id: " +m.getMovieId()+" "+ m.getMovietitle()+"  Status:"+m.getStatus());
+				System.out.printf("|    %-4d| %-30s|%-15s|\n",m.getMovieId(),m.getMovietitle(),m.getStatus());
 			}		
+			System.out.println("+--------------------------------------------------------+");	
 		}
 		
 	}catch (IOException e) {
@@ -289,11 +314,11 @@ public void createShowTime(int cineplexId,int cinemaId,int movieId,String strTim
 	//get cineplex from userinput
 	String cineplex="";
 	if(cineplexId==1) {
-		cineplex= "GV Jurong Point";}
+		cineplex= "BZ Jurong Point";}
 	else if(cineplexId==2){
-		cineplex= "GV Marina Square";}
+		cineplex= "BZ Marina Square";}
 	else if(cineplexId==3){
-		cineplex="GV Suntec City";		
+		cineplex="BZ Suntec City";		
 	}
 	
 	StorageHandler sts=new ShowTimeStorage();
@@ -332,20 +357,20 @@ public void EditShowTime(int showTimeId) throws ParseException{
 		switch(choice){
 			case 1:			
 				System.out.println("Enter new cineplex");
-				System.out.println("1) GV Jurong Point");
-				System.out.println("2) GV Marina Square");
-				System.out.println("3) GV Suntec City");
+				System.out.println("1) BZ Jurong Point");
+				System.out.println("2) BZ Marina Square");
+				System.out.println("3) BZ Suntec City");
 				choice=input.nextInt();
 				input.nextLine();
 				
 				//get cineplex from userinput
 				String strCineplex="";
 				if(choice==1)
-					strCineplex="GV Jurong Point";
+					strCineplex="BZ Jurong Point";
 				else if(choice==2)
-					strCineplex="GV Marina Square";
+					strCineplex="BZ Marina Square";
 				else if(choice==3)
-					strCineplex="GV Suntec City";
+					strCineplex="BZ Suntec City";
 				st.setCineplexName(strCineplex);
 				System.out.println("Cineplex changed!");
 				break;
@@ -454,7 +479,7 @@ public void ShowNormalPrice(){
 		
 		for (int i = 0 ; i < al.size() ; i++) {
 				Price p = (Price)al.get(i);
-				System.out.println(p.getPriceType()+": "+p.getPrice());
+				System.out.printf("|  %-25s | %-6.2f |\n",p.getPriceType(),p.getPrice());
 		}
 		
 		
@@ -472,7 +497,7 @@ public void Show3DPrice(){
 		
 		for (int i = 0 ; i < al.size() ; i++) {
 				Price p = (Price)al.get(i);
-				System.out.println(p.getPriceType()+": "+p.getPrice());
+				System.out.printf("|  %-25s | %-6.2f |\n",p.getPriceType(),p.getPrice());
 				
 		}
 		
@@ -608,8 +633,7 @@ public void ShowHoliday(){
 		al = ss.readHoliday("Holiday.txt") ;
 		for (int i = 0 ; i < al.size() ; i++) {
 				Holiday h = (Holiday)al.get(i);
-				System.out.println(h.getHolidayId()+"       "+ h.getHolidayName()+"       "+h.getHolidayDate());				    	
-			
+				System.out.printf("|%-2d|%-25s| %-8s|\n",h.getHolidayId(),h.getHolidayName(),h.getHolidayDate());
 		}
 	}catch (IOException e) {
 		System.out.println("IOException > " + e.getMessage());
