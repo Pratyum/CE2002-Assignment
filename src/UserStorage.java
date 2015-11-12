@@ -74,7 +74,5 @@ public class UserStorage extends StorageHandler{
 
 //------------------------------------------------------------------------------Unimplemented Methods
 public ArrayList readObject() throws IOException {return null;}
-public void saveFile() {}
-public void print(ArrayList a) {}
-public void saveObject(String filename, List al) throws IOException {}
+public void saveObject(String filename, ArrayList al) throws IOException {}
 }

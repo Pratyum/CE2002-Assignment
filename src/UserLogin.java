@@ -853,9 +853,14 @@ public class UserLogin {
 				}
 			}
 		}
+		System.out.println("+------------------------------------------------------------------+");
+		System.out.printf("|%-3s| %-30s| %-12s| %-15s|","Sno","Name","Ticket Sales","Status");
+		System.out.println();
+		System.out.println("+------------------------------------------------------------------+");
 		for(int i=0;i<MoviesArray.size()&&i<5;++i){
-			System.out.println(i+1+") Movie Name: "+ MoviesArray.get(i).getMovietitle() +"\t Sales: "+MoviesArray.get(i).getTicketSales());
+			System.out.printf("| %-2d| %-30s|%6s%-7d| %-15s|\n",(i+1),MoviesArray.get(i).getMovietitle(),"",MoviesArray.get(i).getTicketSales(),MoviesArray.get(i).getStatus());
 		}
+		System.out.println("+------------------------------------------------------------------+");
 		System.out.println();
 	}
 	
@@ -878,11 +883,15 @@ public class UserLogin {
 				}
 			}
 		}
-		for(int i=0;i<MoviesArray.size()&&i<5;++i){
-			System.out.println(i+1+") Movie Name: "+ MoviesArray.get(i).getMovietitle() +"\t Rating: "+MoviesArray.get(i).getAvgRating());
-		}
+		System.out.println("+------------------------------------------------------------+");
+		System.out.printf("|%-3s| %-30s| %-6s| %-15s|","Sno","Name","Rating","Status");
 		System.out.println();
-		
+		System.out.println("+------------------------------------------------------------+");
+		for(int i=0;i<MoviesArray.size()&&i<5;++i){
+			System.out.printf("| %-2d| %-30s|   %-3.2f| %-15s|\n",(i+1),MoviesArray.get(i).getMovietitle(),MoviesArray.get(i).getAvgRating(),MoviesArray.get(i).getStatus());
+		}
+		System.out.println("+------------------------------------------------------------+");
+		System.out.println();
 	}
 	/**
 	 * Function to check if a date is valid and is after the current date

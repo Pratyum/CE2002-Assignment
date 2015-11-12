@@ -129,7 +129,7 @@ public class MovieStorage extends StorageHandler{
 			}
 	}
 	
-	public void saveObject(String filename, List al) throws IOException {
+	public void saveObject(String filename, ArrayList al) throws IOException {
 			ArrayList<String> alw = new ArrayList<>() ;
 			ArrayList<Review> review = new ArrayList<>();
 		    for (int i = 0 ; i < al.size() ; i++) {
@@ -183,18 +183,5 @@ public class MovieStorage extends StorageHandler{
 			}
 			write(fileName,alw);
 	 }
-	 
-	 
-	@Override
-	public void saveFile() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void print(ArrayList a) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

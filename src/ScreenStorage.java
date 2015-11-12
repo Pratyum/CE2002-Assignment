@@ -26,21 +26,8 @@ public class ScreenStorage extends StorageHandler{
 		}
 		return alr;
 	}
-
 	@Override
-	public void saveFile() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void print(ArrayList a) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void saveObject(String filename, List al) throws IOException {
+	public void saveObject(String filename, ArrayList al) throws IOException {
 		//  Auto-generated method stub
 		ArrayList alw = new ArrayList() ;
 
@@ -59,19 +46,5 @@ public class ScreenStorage extends StorageHandler{
 				alw.add(st.toString());
 			}
 			write(filename,alw);
-	}
-	public static void main(String Agrs[]){
-		ScreenStorage ss = new ScreenStorage();
-		try {
-			ArrayList<Screen> screens= ss.readObject();
-			for(int i=0;i<screens.size();++i){
-				System.out.println(screens.get(i).getStrDate());
-				System.out.println(screens.get(i).getScreenNo());
-				System.out.println(screens.get(i).getSeatsFree());
-			}
-		} catch (IOException | ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }

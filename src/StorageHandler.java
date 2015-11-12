@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public abstract class StorageHandler {
+public abstract class StorageHandler implements ReadObjectInterface,SaveObjectInterface{
 /**
  * Function to read the objects in the file	
  * @param fileName file to read from
@@ -52,7 +52,5 @@ public abstract class StorageHandler {
 	   
 //----------------------------------------------------Methods to be implemented in their Inherited classes	    
 	  public abstract ArrayList readObject() throws IOException, ParseException;
-	  public abstract void saveFile();
-	  public abstract void print(ArrayList a);
-	  public abstract void saveObject(String filename, List al) throws IOException;
+	  public abstract void saveObject(String filename, ArrayList al) throws IOException;
 }

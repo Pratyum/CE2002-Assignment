@@ -68,7 +68,7 @@ public ArrayList<ShowTime> readObject() throws IOException, ParseException {
 /**
  * Function to Save the List of ShowTimes to the file.
  */
-public void saveObject(String filename, List al) throws IOException {
+public void saveObject(String filename, ArrayList al) throws IOException {
 	ArrayList<String> alw = new ArrayList<>() ;
 
     for (int i = 0 ; i < al.size() ; i++) {
@@ -88,10 +88,5 @@ public void saveObject(String filename, List al) throws IOException {
 		}
 		write(filename,alw);
 }
-//------------------------------------------------------------------Unimplemented Methods
-@Override
-public void print(ArrayList a) {}
-@Override
-public void saveFile() {}	
-	
+
 }

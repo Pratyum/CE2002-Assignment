@@ -44,7 +44,7 @@ public class TicketStorage extends StorageHandler{
 	 * @param filename Filename to write to 
 	 * @param al List of Tickets to be written
 	 */
-	public void saveObject(String filename, List al) throws IOException {
+	public void saveObject(String filename, ArrayList al) throws IOException {
 		ArrayList<String> alw = new ArrayList<>() ;
 		for (int i = 0 ; i < al.size() ; i++) {
 			Ticket ticket= (Ticket)al.get(i);

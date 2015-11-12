@@ -34,18 +34,9 @@ public class BookingStorage extends StorageHandler{
 			}
 			return alr ;
 	}
+
 	@Override
-	public void saveFile() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void print(ArrayList a) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void saveObject(String filename, List al) throws IOException {
+	public void saveObject(String filename, ArrayList al) throws IOException {
 		// TODO Auto-generated method stub
 		ArrayList<String> alw = new ArrayList<>() ;
 	    for (int i = 0 ; i < al.size() ; i++) {

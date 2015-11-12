@@ -49,7 +49,7 @@ public class SystemStorage extends StorageHandler{
  * @param al List of prices to write
  * @throws IOException since the errors need to be on the top level
  */
-		  public void saveupdatedPrice(String filename, List al) throws IOException {
+		  public void saveupdatedPrice(String filename, ArrayList al) throws IOException {
 		  		ArrayList<String> alw = new ArrayList<>() ;
 
 		          for (int i = 0 ; i < al.size() ; i++) {
@@ -103,7 +103,7 @@ public class SystemStorage extends StorageHandler{
 	 * @param al List of Holidays defined by the user
 	 * @throws IOException since the errors need to be on the top level
 	 */
-	  public void saveupdatedHoliday(String filename, List al) throws IOException {
+	  public void saveupdatedHoliday(String filename, ArrayList al) throws IOException {
 	  		ArrayList<String> alw = new ArrayList<>() ;// to store Professors data
 
 	          for (int i = 0 ; i < al.size() ; i++) {
@@ -125,7 +125,5 @@ public class SystemStorage extends StorageHandler{
 // These are not being used since we combine both holiday 
 // and price in one class, hence require different functions for each.
 	public ArrayList readObject() throws IOException, ParseException {return null;}
-	public void saveFile() {}
-	public void print(ArrayList a) {}
-	public void saveObject(String filename, List al) throws IOException {}
+	public void saveObject(String filename, ArrayList al) throws IOException {}
 }
