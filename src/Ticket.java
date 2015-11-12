@@ -111,11 +111,11 @@ public class Ticket implements DisplayInterface{
 	 * Function to display all the details.
 	 */
 	public void display(){	
-		System.out.println("Movie: "+getMovie());
-		System.out.println("Show Date: "+ getShowDate());
-		System.out.println("Show Time: "+ getShowTime());		
-		System.out.println("Screen No: "+ getscreenNo());
-		System.out.print("Seats :");
+		System.out.printf("|     Movie: %-30s|\n",getMovie());
+		System.out.printf("|     Show Date: %-26s|\n",getShowDate());
+		System.out.printf("|     Show Time: %-26s|\n",getShowTime());		
+		System.out.printf("|     Screen No: %-26s|\n",getscreenNo());
+		System.out.print("|     Seats : ");
 
 	}
 	/**
@@ -133,7 +133,7 @@ public class Ticket implements DisplayInterface{
 		int hours=Integer.parseInt(showTime.substring(0, 2));
 		int minutes=Integer.parseInt(showTime.substring(3));
 		Calendar cal = Calendar.getInstance();
-		cal.set(year, month, day, hours, minutes, 0);
+		cal.set(year, month-1, day, hours, minutes, 0);
 		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK) ;
 		
 		//Load the list of holidays and the list of prices

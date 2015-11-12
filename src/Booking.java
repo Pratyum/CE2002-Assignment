@@ -20,13 +20,14 @@ public class Booking implements DisplayInterface{
 	public void setName(String Name){name =Name;}
 	public void setEmail(String Email){email =Email;}
 	public void setTID(long tId){TID =tId;}
-	public void setName(int Number){number =Number;}
+	public void setNumber(int Number){number =Number;}
 	public void setPrice(double Price){price = Price;}
 	public void display(){
-		System.out.println("-----------------Booking Details-----------------");
-		System.out.println("Transaction ID: "+ getTID());
-		System.out.println("Name: "+getName());
-		System.out.println("Phone: "+getNumber());
-		System.out.println("Email: "+getEmail());
-		}
+		System.out.println("+----------------Booking Details-------------+");
+		System.out.printf("|        Transaction ID: %-19d |\n",getTID());
+		System.out.printf("|        Name: %-30s|\n",getName());
+		System.out.printf("|        Phone: %-29d|\n",getNumber());
+		System.out.printf("|        Email: %-29s|\n",getEmail());
+		System.out.println("+--------------------------------------------+");
+	}
 }

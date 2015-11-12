@@ -84,6 +84,7 @@ public class Movie implements Serializable,DisplayInterface {
 		review = Review;
 		avgRating = 0;
 		for(int i=0;i<Review.size();++i){avgRating+= Review.get(i).getReviewRating();}
+		avgRating/=Review.size();
 	}
 	public void addReview(String ReviewText, int ReviewRating){ // construct a new review and add as movie attribute.
 		Review custReview =  new Review(ReviewText, ReviewRating,movieId) ;
@@ -96,7 +97,6 @@ public class Movie implements Serializable,DisplayInterface {
 	public void addRating(int rating){
 		this.totalRating += rating;
 		avgRating = totalRating/review.size();
-		this.rating = Float.toString(this.avgRating);
 	}
 
 	public boolean equals(Object o) {

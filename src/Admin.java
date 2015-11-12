@@ -610,7 +610,7 @@ public void CreateHoliday(String HolidayName,String HolidayDate ){
 		al = ss.readHoliday("Holiday.txt") ;
 		int HolidayId=(al.size())+1;
 		for (int i = 0 ; i < al.size() ; i++) {
-				Date d1 = (Date)al.get(i);
+				Holiday d1 = (Holiday)al.get(i);
 				
 		}
 		

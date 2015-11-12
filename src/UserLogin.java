@@ -29,7 +29,6 @@ public class UserLogin {
 		TicketStorage ts = new TicketStorage();
 		try {
 			ListOfScreen = ss.readObject();
-			System.out.println("Screens Loaded!");
 		} catch (IOException e) {
 			
 			System.out.println("Screen.txt not Found!");
@@ -38,13 +37,11 @@ public class UserLogin {
 		}
 		try {
 			ListOfMovies = ms.readObject();
-			System.out.println("Movies Loaded!");
 		} catch (IOException e) {
 			System.out.println("Movie File Not Found!" + e.getMessage());
 		}
 		try {
 			ListOfBooking= bs.readObject();
-			System.out.println("Booking Loaded!");
 		} catch (IOException e) {
 			System.out.println("Booking File Not Found!" + e.getMessage());
 		} catch (ParseException e) {
@@ -52,7 +49,6 @@ public class UserLogin {
 		}
 		try {
 			ListOfTickets= ts.readObject();
-			System.out.println("Tickets Loaded!");
 		} catch (IOException e) {
 			System.out.println("Ticket File Not Found!" + e.getMessage());
 		} catch (ParseException e) {
@@ -79,7 +75,7 @@ public class UserLogin {
 	    System.out.println("|    1.Create/Update/Remove Movie Listing                             |");
 	    System.out.println("|    2.Create/Update/Remove cinema showtime and movie to be shown     |");
 	    System.out.println("|    3.Configure System                                               |");
-	    System.out.println("|    0.Exit                                                           |");
+	    System.out.println("|    0.Log out                                                        |");
 	    System.out.println("+---------------------------------------------------------------------+");
 	}
 	/**
@@ -270,6 +266,7 @@ public class UserLogin {
 			if(cineplexId==0)
 				return;
 			int cinemaId=0,movieId=0;
+			input.nextLine();
 			do{try{
 			System.out.println("Enter Screen No: ");
 			cinemaId=input.nextInt();
@@ -284,6 +281,8 @@ public class UserLogin {
 			//show movies showing now
 			try {
 				check.ShowMovie(1); //Shows only running movies
+				System.out.println();
+				check.ShowMovie(4);//Show only Preview Movies
 			} catch (ParseException e) {
 				System.out.println("Unable to parse!");
 			}
@@ -298,7 +297,7 @@ public class UserLogin {
 				input.nextLine();
 				continue;
 			}}while(movieId==-1);
-			
+			input.nextLine();
 			System.out.println("Enter time in hh:mm");
 			String time=input.nextLine();
 			
@@ -596,6 +595,7 @@ public class UserLogin {
 				details = input.next().charAt(0);
 				if(details=='Y'){
 					isElder = true;
+					break;
 				}
 			}
 			}while(details!='Y'||details!='N');
@@ -655,12 +655,13 @@ public class UserLogin {
 	private Booking chooseBooking(ArrayList<Ticket> tickets){
 		String name,email;
 		int number=0;
+		input.nextLine();
 		System.out.println("Please Enter Your Details");
 		System.out.println("NAME: ");
-		name = input.next();
+		name = input.nextLine();
 		do{
 		System.out.println("Email: ");
-		email = input.next();
+		email = input.nextLine();
 		if(email.indexOf('@')>0 &&email.indexOf('.')>0)
 			break;
 		}while(true);
@@ -694,15 +695,15 @@ public class UserLogin {
 	private void printBooking(Booking booking,ArrayList<Ticket> tickets){
 		// Create pretty print of Booking
 		booking.display();
-		System.out.println("+----------------Ticket Details-----------------+");
+		System.out.println("+--------------Ticket Details--------------+");
 		tickets.get(0).display();	
 		for(int i=0;i<tickets.size();++i){
 			System.out.print(tickets.get(i).getTicketNo()+" ");
 		}
 		System.out.println();
 		System.out.println("+-----------------Payment Details-------------------+");
-		System.out.println("  Total Price: $"+calculatePrice(tickets)+" /-      ");
-		System.out.println("  Thanks For Shopping with us!Hope to see you soon! ");
+		System.out.println("   Total Price: $"+calculatePrice(tickets)+" /-      ");
+		System.out.println("|  Thanks For Shopping with us!Hope to see you soon!| ");
 		System.out.println("+---------------------------------------------------+");
 		
 	}
@@ -931,10 +932,9 @@ public class UserLogin {
 	    int choice=0,choice1;
 	    int mainOption=0,subOption=0;
 	    loadData();
-	    this.printMenuOptions();
-	    
 //	    login function
 	    do{
+	    	this.printMenuOptions();
 	    	do{try{
 			  System.out.print("Choice: ");
 			  choice = input.nextInt();
@@ -1111,6 +1111,7 @@ public class UserLogin {
 							p.ShowNormalPrice();
 							System.out.println("+-------------------------------------+");
 							System.out.println("|          2)3D Price                 |");
+							System.out.println("+-------------------------------------+");
 							System.out.printf("|  %-25s | %-6s |\n","Price Type","Price");
 							p.Show3DPrice();
 							System.out.println("+-------------------------------------+");
@@ -1178,11 +1179,11 @@ public class UserLogin {
 						do
 						{
 							Admin holiday=new Admin();
-							System.out.println("+--Current List of Holiday-------------+");
+							System.out.println("+----Current List of Holiday-------------+");
 							System.out.printf("|%-2s|%-25s| %-8s|\n","ID","Name","Date");
-							System.out.println("|--------------------------------------|");
+							System.out.println("|----------------------------------------|");
 							holiday.ShowHoliday();
-							System.out.println("+--------------------------------------+");
+							System.out.println("+----------------------------------------+");
 							System.out.println();
 							System.out.println("+-----------------------------------+");
 							System.out.println("|     1.Create New Public Holiday   |");
@@ -1203,7 +1204,7 @@ public class UserLogin {
 							switch(holidaychoice)
 							{
 							case 1:
-								System.out.println("Please enter a Date(dd/mm/yy):");
+								System.out.println("Please enter a Date(dd-mm-yyyy):");
 								String holidaydate=input.nextLine();
 								System.out.println("Please enter Holiday Name:");
 								String holidayname=input.nextLine();
@@ -1213,11 +1214,11 @@ public class UserLogin {
 								break;
 							case 2:
 								Admin rh=new Admin();
-								System.out.println("+--Current List of Holiday-------------+");
+								System.out.println("+----Current List of Holiday-------------+");
 								System.out.printf("|%-2s|%-25s| %-8s|\n","ID","Name","Date");
-								System.out.println("|--------------------------------------|");
+								System.out.println("|----------------------------------------|");
 								holiday.ShowHoliday();
-								System.out.println("+--------------------------------------+");
+								System.out.println("+----------------------------------------+");
 								System.out.println();
 								int idtoremove=0;
 								do{try{
@@ -1243,8 +1244,6 @@ public class UserLogin {
 			 			System.out.println("Please enter a valid choice");
 					}
 					}while(choice13!=0);
-					break;
-				case 4:
 					break;	
 				case 0:
 					break;
@@ -1422,7 +1421,6 @@ public class UserLogin {
 					}while(choice61!=0);
 					}
 					}while(movieID!=0);
-					break;
 			  }
 			  else if (custOption==7){
 				//Display All Movies
@@ -1456,6 +1454,6 @@ public class UserLogin {
 			System.out.println("Please enter a valid choice");
 			break;
 		}
-		}while(choice<1 || choice >3);
+		}while(choice<=1 || choice >3);
 	 }//End of Login
 }

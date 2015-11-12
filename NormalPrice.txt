@@ -1,4 +1,4 @@
-Student before 6pm:7.5
+Student before 6pm:7.0
 Student after 6pm:8.0
 Senior Citizen:5.5
 Adults:9.0
